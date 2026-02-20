@@ -48,4 +48,3 @@ export default async function Detail({ params }) {
     </div>
   );
 }
-
