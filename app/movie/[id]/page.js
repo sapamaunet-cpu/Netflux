@@ -1,4 +1,4 @@
-import { getMovieDetail } from '@/lib/tmdb';
+import { getMovieDetail } from '../../../lib/tmdb';
 import Link from 'next/link';
 
 export default async function Detail({ params }) {
