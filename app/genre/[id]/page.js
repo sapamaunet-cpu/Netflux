@@ -1,5 +1,5 @@
-import { getMovies } from '@/lib/tmdb';
-import MovieList from '@/components/MovieList';
+import { getMovies } from '../../../lib/tmdb';
+import MovieList from '../../../components/MovieList';
 
 export default async function GenrePage({ params, searchParams }) {
   const genreId = params.id;
