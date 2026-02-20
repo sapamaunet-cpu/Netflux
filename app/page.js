@@ -1,5 +1,5 @@
-import { getMovies } from '@/lib/tmdb';
-import MovieList from '@/components/MovieList';
+import { getMovies } from '../lib/tmdb';
+import MovieList from '../components/MovieList';
 
 export default async function Home() {
   const data = await getMovies('/movie/popular', 1);
