@@ -1,5 +1,5 @@
-import { getMovies } from '../../lib/tmdb';
-import MovieList from '../../components/MovieList';
+import { getMovies } from '../lib/tmdb';
+import MovieList from '../components/MovieList';
 
 export default async function SearchPage({ searchParams }) {
   // Mengambil kata kunci dari URL (?q=nama-film)
