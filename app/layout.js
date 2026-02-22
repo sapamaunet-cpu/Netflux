@@ -22,7 +22,7 @@ export default function RootLayout({ children }) {
           <div className="max-w-7xl mx-auto px-4">
             <div className="flex items-center justify-between h-16">
               <Link href="/" className="text-2xl font-black text-red-600 tracking-tighter">
-                NETFLUX
+                BLOKMOVIE 🌎
               </Link>
               
               {/* Tambahkan Search Icon/Button di sini nanti */}
