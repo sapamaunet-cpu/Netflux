@@ -3,33 +3,53 @@ import Link from 'next/link';
 
 export default function RootLayout({ children }) {
   const genres = [
-    { id: 28, name: 'Action' }, { id: 27, name: 'Horror' },
-    { id: 35, name: 'Comedy' }, { id: 18, name: 'Drama' }, { id: 878, name: 'Sci-Fi' }
+    { id: 28, name: 'Action' },
+    { id: 12, name: 'Adventure' },
+    { id: 35, name: 'Comedy' },
+    { id: 27, name: 'Horror' },
+    { id: 878, name: 'Sci-Fi' },
+    { id: 18, name: 'Drama' },
+    { id: 53, name: 'Thriller' },
+    { id: 16, name: 'Animation' },
+    { id: 10751, name: 'Family' },
   ];
 
   return (
     <html lang="id">
-      <body className="bg-black text-white selection:bg-red-600">
-        <nav className="p-4 bg-zinc-900/80 backdrop-blur-md sticky top-0 z-50 border-b border-zinc-800">
-          <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
-            <Link href="/" className="text-red-600 font-black text-3xl tracking-tighter">BLOKMOVIES</Link>
-            
-            <div className="flex gap-5 overflow-x-auto w-full md:w-auto no-scrollbar py-2">
-              {genres.map(g => (
-                <Link key={g.id} href={`/genre/${g.id}?name=${g.name}`} className="text-sm font-medium text-zinc-400 hover:text-white transition">
-                  {g.name}
-                </Link>
-              ))}
+      <body className="bg-black text-white">
+        {/* Header / Navbar */}
+        <header className="sticky top-0 z-50 bg-black/80 backdrop-blur-md border-b border-zinc-800">
+          <div className="max-w-7xl mx-auto px-4">
+            <div className="flex items-center justify-between h-16">
+              <Link href="/" className="text-2xl font-black text-red-600 tracking-tighter">
+                NETFLUX
+              </Link>
+              
+              {/* Tambahkan Search Icon/Button di sini nanti */}
+              <div className="text-zinc-400 hover:text-white cursor-pointer">
+                🔍
+              </div>
             </div>
 
-            <form action="/search" method="GET" className="w-full md:w-64">
-              <input name="q" placeholder="Cari film favorit..." className="bg-zinc-800 border border-zinc-700 px-4 py-2 rounded-full text-sm w-full focus:ring-2 focus:ring-red-600 outline-none" />
-            </form>
+            {/* List Genre Horizontal */}
+            <nav className="flex gap-6 overflow-x-auto py-3 no-scrollbar text-sm font-medium border-t border-zinc-900">
+              {genres.map((genre) => (
+                <Link 
+                  key={genre.id} 
+                  href={`/genre/${genre.id}?name=${genre.name}`}
+                  className="whitespace-nowrap hover:text-red-500 transition-colors"
+                >
+                  {genre.name}
+                </Link>
+              ))}
+            </nav>
           </div>
-        </nav>
-        {children}
-        <footer className="p-10 text-center text-zinc-600 text-sm border-t border-zinc-900 mt-20">
-          © 2026 NETFLUX - Power by TMDB API
+        </header>
+
+        <main>{children}</main>
+
+        <footer className="py-10 text-center text-zinc-500 text-xs border-t border-zinc-900 mt-20">
+          <p>© 2026 NETFLUX - Power by TMDB API</p>
         </footer>
       </body>
     </html>
