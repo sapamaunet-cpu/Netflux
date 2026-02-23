@@ -1,4 +1,4 @@
-import { getMovieDetail } from '../../../lib/tmdb';
+import { getMovies } from '../../../lib/tmdb';
 import MovieList from '../../../components/MovieList';
 
 export default async function GenrePage({ params, searchParams }) {
@@ -7,7 +7,7 @@ export default async function GenrePage({ params, searchParams }) {
   
   // Endpoint discover untuk memfilter berdasarkan genre ID
   const endpoint = `/discover/movie?with_genres=${genreId}`;
-  const initialData = await getMovieDetail(endpoint, 1);
+  const initialData = await getMovies(endpoint, 1);
 
   return (
     <div className="max-w-7xl mx-auto py-8">
