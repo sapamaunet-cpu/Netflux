@@ -1,33 +1,55 @@
 import { getMovieDetail } from '../../../lib/tmdb';
 import Link from 'next/link';
+import MovieCard from '../../../components/MovieCard'; // Pastikan path ini benar
 
 export default async function MoviePage({ params }) {
-  // Ambil ID dari params
-  const { id } = params;
+  const { id } = await params;
   const movie = await getMovieDetail(id);
 
-  // Jika data gagal diambil, tampilkan pesan error yang jelas
   if (!movie || !movie.id) {
     return (
       <div className="min-h-screen bg-black text-white flex items-center justify-center p-10 text-center">
         <div>
           <h1 className="text-2xl font-bold text-red-600 mb-4">Gagal Memuat Film</h1>
-          <p className="text-zinc-400">Pastikan API Key sudah benar di Vercel Settings.</p>
           <Link href="/" className="mt-6 inline-block bg-white text-black px-6 py-2 rounded-full font-bold">Kembali ke Home</Link>
         </div>
       </div>
     );
   }
 
+  // Ambil film terkait dari data movie (append_to_response sudah kita buat sebelumnya)
+  const relatedMovies = movie.recommendations?.results?.slice(0, 5) || [];
+
   return (
     <div className="min-h-screen bg-black text-white pb-20">
-      {/* 1. PLAYER VIDEO (STREAMING) */}
-      <div className="w-full aspect-video bg-zinc-900 shadow-2xl">
-        <iframe 
-          src={`https://vidsrc.me/embed/movie?tmdb=${movie.id}`} 
-          className="w-full h-full" 
-          allowFullScreen 
+      
+      {/* 1. HERO SECTION & TOMBOL TONTON */}
+      <div className="relative w-full h-[50vh] md:h-[70vh] bg-zinc-900 shadow-2xl overflow-hidden group">
+        {/* Backdrop Image sebagai Background */}
+        <img 
+          src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`} 
+          className="absolute inset-0 w-full h-full object-cover opacity-40"
+          alt="Backdrop"
         />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+        
+        {/* Konten di Tengah Hero */}
+        <div className="absolute inset-0 flex flex-col items-center justify-center p-4">
+          <div className="max-w-3xl text-center">
+            <h2 className="text-sm font-bold text-red-600 uppercase tracking-[0.4em] mb-4">Nonton Film Online</h2>
+            <h1 className="text-4xl md:text-6xl font-black mb-6 uppercase tracking-tighter drop-shadow-2xl">
+              {movie.title}
+            </h1>
+            
+            {/* Link Anchor ke bagian Player di bawah */}
+            <a 
+              href="#player" 
+              className="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-full font-black text-lg transition transform hover:scale-105"
+            >
+              <span className="text-2xl">▶</span> TONTON SEKARANG
+            </a>
+          </div>
+        </div>
       </div>
 
       <div className="max-w-6xl mx-auto px-4 mt-10">
@@ -63,9 +85,9 @@ export default async function MoviePage({ params }) {
               </p>
             </div>
 
-            {/* 4. PEMERAN UTAMA (CAST) */}
-            <div>
-              <h2 className="text-xl font-bold mb-5 border-l-4 border-red-600 pl-3">Pemeran</h2>
+            {/* 4. PEMERAN UTAMA */}
+            <div className="mb-12">
+              <h2 className="text-xl font-bold mb-5 border-l-4 border-red-600 pl-3">Pemeran Utama</h2>
               <div className="flex gap-4 overflow-x-auto pb-4 no-scrollbar">
                 {movie.credits?.cast?.slice(0, 8).map((person) => (
                   <div key={person.id} className="w-24 flex-shrink-0 text-center">
@@ -79,6 +101,31 @@ export default async function MoviePage({ params }) {
                 ))}
               </div>
             </div>
+
+            {/* 5. PLAYER VIDEO (MUNCUL SETELAH KLIK TONTON) */}
+            <div id="player" className="scroll-mt-24 mb-16">
+               <h2 className="text-xl font-bold mb-5 border-l-4 border-red-600 pl-3">Streaming Player</h2>
+               <div className="w-full aspect-video bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-800 shadow-2xl">
+                <iframe 
+                    src={`https://vidsrc.me/embed/movie?tmdb=${movie.id}`} 
+                    className="w-full h-full" 
+                    allowFullScreen 
+                />
+               </div>
+               <p className="text-xs text-zinc-500 mt-2 italic text-center">*Gunakan pemblokir iklan untuk kenyamanan menonton.</p>
+            </div>
+
+            {/* 6. FILM TERKAIT */}
+            {relatedMovies.length > 0 && (
+              <div>
+                <h2 className="text-xl font-bold mb-5 border-l-4 border-red-600 pl-3">Film Terkait</h2>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                  {relatedMovies.map((item) => (
+                    <MovieCard key={item.id} movie={item} />
+                  ))}
+                </div>
+              </div>
+            )}
 
           </div>
         </div>
