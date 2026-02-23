@@ -1,4 +1,4 @@
-import { getMovies } from '../lib/tmdb';
+import { getMovieDetail } from '../lib/tmdb';
 import MovieList from '../components/MovieList';
 
 export default async function Home() {
