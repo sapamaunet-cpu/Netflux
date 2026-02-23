@@ -1,4 +1,4 @@
-import { getMovieDetail } from '../../lib/tmdb';
+import { getMovies } from '../../lib/tmdb';
 import MovieList from '../../components/MovieList';
 
 // Memaksa halaman agar tidak dirender statis (mencegah error build)
@@ -21,7 +21,7 @@ export default async function SearchPage({ searchParams }) {
   }
 
   // Mengambil data dari TMDB
-  const initialData = await getMovieDetail(`/search/movie?query=${encodeURIComponent(searchQuery)}`, 1);
+  const initialData = await getMovies(`/search/movie?query=${encodeURIComponent(searchQuery)}`, 1);
 
   return (
     <div className="min-h-screen bg-black text-white p-6">
