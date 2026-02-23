@@ -1,57 +1,61 @@
 import { getMovieDetail } from '../../../lib/tmdb';
+import Link from 'next/link';
 
 export default async function Detail({ params }) {
-  // Tunggu data detail film dari TMDB
   const movie = await getMovieDetail(params.id);
 
-  // Jika film tidak ditemukan
-  if (!movie || !movie.id) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-black text-white">
-        <p>Film tidak ditemukan atau terjadi kesalahan.</p>
-      </div>
-    );
-  }
+  if (!movie || !movie.id) return <div className="p-10 text-center">Loading...</div>;
 
   return (
-    <div className="min-h-screen bg-black text-white">
-      {/* Player Video */}
-      <div className="w-full bg-zinc-900 aspect-video">
+    <div className="min-h-screen bg-black text-white pb-20">
+      {/* Player */}
+      <div className="aspect-video w-full bg-zinc-900">
         <iframe 
           src={`https://vidsrc.ru/embed/movie/${movie.id}`} 
-          className="w-full h-full border-0" 
-          allowFullScreen 
-          title={movie.title}
+          className="w-full h-full" allowFullScreen 
         />
       </div>
 
-      {/* Informasi Film */}
-      <div className="max-w-4xl mx-auto p-6">
-        <div className="flex flex-col md:flex-row gap-8">
-          {/* Poster Kecil */}
-          <div className="w-40 flex-shrink-0 mx-auto md:mx-0">
-            <img 
-              src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} 
-              alt={movie.title}
-              className="rounded-lg shadow-lg border border-zinc-800"
-            />
+      <div className="max-w-6xl mx-auto px-4 mt-8">
+        <h1 className="text-4xl font-bold">{movie.title}</h1>
+        <p className="text-zinc-400 mt-4 italic">{movie.overview}</p>
+
+        {/* --- BAGIAN PEMERAN UTAMA --- */}
+        <div className="mt-12">
+          <h2 className="text-2xl font-bold mb-6 border-l-4 border-red-600 pl-3">Pemeran Utama</h2>
+          <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
+            {movie.credits?.cast?.slice(0, 10).map((actor) => (
+              <div key={actor.id} className="w-32 flex-shrink-0 text-center">
+                <div className="w-32 h-32 rounded-full overflow-hidden border-2 border-zinc-800 mb-2">
+                  <img 
+                    src={actor.profile_path ? `https://image.tmdb.org/t/p/w185${actor.profile_path}` : 'https://placehold.co/200x200?text=No+Photo'} 
+                    className="w-full h-full object-cover"
+                    alt={actor.name}
+                  />
+                </div>
+                <p className="text-sm font-semibold line-clamp-1">{actor.name}</p>
+                <p className="text-xs text-zinc-500 line-clamp-1">{actor.character}</p>
+              </div>
+            ))}
           </div>
-          
-          {/* Teks Detail */}
-          <div>
-            <h1 className="text-4xl font-bold mb-2">{movie.title}</h1>
-            <div className="flex gap-4 text-sm text-zinc-400 mb-4 font-semibold">
-              <span className="text-yellow-400">★ {movie.vote_average?.toFixed(1)}</span>
-              <span>{movie.release_date?.split('-')[0]}</span>
-              <span>{movie.runtime} Menit</span>
-            </div>
-            <p className="text-zinc-300 leading-relaxed text-lg italic mb-4">
-              "{movie.tagline}"
-            </p>
-            <h2 className="text-xl font-bold mb-2">Sinopsis</h2>
-            <p className="text-zinc-400 leading-relaxed">
-              {movie.overview}
-            </p>
+        </div>
+
+        {/* --- BAGIAN FILM TERKAIT --- */}
+        <div className="mt-12">
+          <h2 className="text-2xl font-bold mb-6 border-l-4 border-red-600 pl-3">Film Terkait</h2>
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+            {movie.recommendations?.results?.slice(0, 5).map((rec) => (
+              <Link href={`/movie/${rec.id}`} key={rec.id} className="group">
+                <div className="relative aspect-[2/3] rounded-lg overflow-hidden">
+                  <img 
+                    src={`https://image.tmdb.org/t/p/w342${rec.poster_path}`} 
+                    className="object-cover w-full h-full group-hover:scale-110 transition"
+                    alt={rec.title}
+                  />
+                </div>
+                <p className="mt-2 text-sm font-medium line-clamp-1">{rec.title}</p>
+              </Link>
+            ))}
           </div>
         </div>
       </div>
