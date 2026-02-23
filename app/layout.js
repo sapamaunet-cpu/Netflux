@@ -1,5 +1,7 @@
 import './globals.css';
 import Link from 'next/link';
+import SearchBar from '../components/SearchBar'; // Import komponen tadi
+
 
 export default function RootLayout({ children }) {
   const genres = [
@@ -26,9 +28,9 @@ export default function RootLayout({ children }) {
               </Link>
               
               {/* Tambahkan Search Icon/Button di sini nanti */}
-              <div className="text-zinc-400 hover:text-white cursor-pointer">
-                🔍
-              </div>
+              <div className="flex items-center gap-4">
+  <SearchBar /> 
+</div>
             </div>
 
             {/* List Genre Horizontal */}
