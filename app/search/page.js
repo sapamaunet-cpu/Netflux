@@ -6,7 +6,7 @@ export default async function SearchPage({ searchParams }) {
   const query = searchParams.q || '';
   
   // Memulai fetch data dari TMDB untuk halaman pertama
-  const initialData = await getMovies('', 1, query);
+  const initialData = await getMovieDetail('', 1, query);
 
   return (
     <div className="max-w-7xl mx-auto py-8">
