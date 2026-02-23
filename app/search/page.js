@@ -1,38 +1,43 @@
-import { getMovieDetail } from '../../lib/tmdb';
+import { getMoviesDetail } from '../../lib/tmdb';
 import MovieList from '../../components/MovieList';
 
+// Memaksa halaman agar tidak dirender statis (mencegah error build)
 export const dynamic = 'force-dynamic';
 
 export default async function SearchPage({ searchParams }) {
-  // Mengambil kata kunci dari URL (?q=nama-film)
-  const query = searchParams.q || '';
+  // Pastikan searchParams ditunggu (awaited)
+  const params = await searchParams;
   
-  // Memulai fetch data dari TMDB untuk halaman pertama
-  const initialData = await getMovieDetail('', 1, query);
+  // Mengambil nilai 'q' (sesuaikan dengan SearchBar.js)
+  const searchQuery = params?.q || "";
+
+  // Jika kolom pencarian kosong
+  if (!searchQuery) {
+    return (
+      <div className="min-h-screen bg-black text-white flex items-center justify-center">
+        <p className="text-zinc-500">Silakan masukkan judul film pada kolom pencarian.</p>
+      </div>
+    );
+  }
+
+  // Mengambil data dari TMDB
+  const initialData = await getMoviesDetail(`/search/movie?query=${encodeURIComponent(searchQuery)}`, 1);
 
   return (
-    <div className="max-w-7xl mx-auto py-8">
-      <div className="px-4 mb-8">
-        <h1 className="text-zinc-400 text-lg">
-          Hasil pencarian untuk: <span className="text-white font-bold text-2xl italic">"{query}"</span>
+    <div className="min-h-screen bg-black text-white p-6">
+      <div className="max-w-7xl mx-auto">
+        <h1 className="text-2xl font-bold mb-8">
+          Hasil Pencarian: <span className="text-red-600">"{searchQuery}"</span>
         </h1>
-        <p className="text-zinc-500 text-sm mt-1">
-          Ditemukan sekitar {initialData.total_results?.toLocaleString()} film
-        </p>
+        
+        {initialData?.results?.length > 0 ? (
+          <MovieList initialData={initialData} endpoint={`/search/movie?query=${encodeURIComponent(searchQuery)}`} />
+        ) : (
+          <div className="text-center py-20">
+            <p className="text-zinc-500 text-lg">Maaf, film "{searchQuery}" tidak ditemukan.</p>
+          </div>
+        )}
       </div>
-
-      {initialData.results?.length > 0 ? (
-        <MovieList 
-          initialData={initialData} 
-          query={query} 
-          limit={0} // 0 berarti tidak dibatasi (mengikuti total data TMDB)
-        />
-      ) : (
-        <div className="flex flex-col items-center justify-center py-20">
-          <span className="text-6xl mb-4">🔍</span>
-          <p className="text-zinc-500 text-xl">Maaf, film yang Anda cari tidak ditemukan.</p>
-        </div>
-      )}
     </div>
   );
 }
