@@ -24,7 +24,7 @@ export default async function MoviePage({ params }) {
       {/* 1. PLAYER VIDEO (STREAMING) */}
       <div className="w-full aspect-video bg-zinc-900 shadow-2xl">
         <iframe 
-          src={`https://vidsrc.ru/embed/movie/${movie.id}`} 
+          src={`https://vidsrc.me/embed/movie?tmdb=${movie.id}`} 
           className="w-full h-full" 
           allowFullScreen 
         />
