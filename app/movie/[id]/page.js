@@ -90,17 +90,18 @@ export default async function MoviePage({ params, searchParams }) {
       {movie.runtime} Menit
     </span>
 
-    {/* Daftar Genre */}
-    <div className="flex flex-wrap gap-2">
-      {movie.genres?.map((genre) => (
-        <span 
-          key={genre.id} 
-          className="bg-red-600/10 text-red-500 px-3 py-1 rounded border border-red-600/20 text-[10px] uppercase tracking-wider"
-        >
-          {genre.name}
-        </span>
-      ))}
-    </div>
+    {/* Daftar Genre sebagai Link */}
+<div className="flex flex-wrap gap-2">
+  {movie.genres?.map((genre) => (
+    <Link 
+      key={genre.id} 
+      href={`/genre/${genre.id}`} // Mengarahkan ke halaman genre berdasarkan ID
+      className="bg-red-600/10 text-red-500 px-3 py-1 rounded border border-red-600/20 text-[10px] uppercase tracking-wider hover:bg-red-600 hover:text-white transition-colors duration-300"
+    >
+      {genre.name}
+    </Link>
+  ))}
+</div>
   </div>
 
   <div className="mb-10">
