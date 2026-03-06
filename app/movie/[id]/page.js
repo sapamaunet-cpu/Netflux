@@ -1,7 +1,16 @@
+"use client"
 import { getMovieDetail } from '../../../lib/tmdb'; //
 import Link from 'next/link';
 import MovieCard from '../../../components/MovieCard'; //
 import AdBanner from '../../../components/AdBanner';
+
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { FreeMode, Pagination } from 'swiper/modules';
+
+// Import CSS Swiper
+import 'swiper/css';
+import 'swiper/css/free-mode';
+import 'swiper/css/pagination';
 
 export default async function MoviePage({ params, searchParams }) {
   const { id } = await params;
@@ -57,15 +66,6 @@ export default async function MoviePage({ params, searchParams }) {
 
       <div className="max-w-6xl mx-auto px-4 mt-10">
         <div className="flex flex-col md:flex-row gap-10">
-          
-          "use client"
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { FreeMode, Pagination } from 'swiper/modules';
-
-// Import CSS Swiper
-import 'swiper/css';
-import 'swiper/css/free-mode';
-import 'swiper/css/pagination';
 
 export default function MovieGallery({ movie }) {
   // Ambil data poster tambahan
@@ -123,7 +123,6 @@ export default function MovieGallery({ movie }) {
     </div>
   );
 }
-
 
           {/* 3. INFORMASI & SINOPSIS */}
 <div className="flex-1">
