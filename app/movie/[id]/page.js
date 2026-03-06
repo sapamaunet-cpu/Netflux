@@ -111,7 +111,7 @@ export default async function MoviePage({ params, searchParams }) {
     </p>
               {/* IKLAN DI BAWAH SINOPSIS */}
               <div className="my-8">
-                <AdBanner />
+                <AdBanner type="detail"/>
               </div>
             </div>
 
