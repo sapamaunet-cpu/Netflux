@@ -68,22 +68,56 @@ export default async function MoviePage({ params, searchParams }) {
             </div>
           </div>
 
-          <div className="flex-1">
-            <h1 className="text-5xl font-black mb-4 uppercase tracking-tighter text-red-600">
-              {movie.title}
-            </h1>
-            
-            <div className="flex items-center gap-4 text-sm font-bold text-zinc-400 mb-8">
-              <span className="text-yellow-400 text-lg">★ {movie.vote_average?.toFixed(1)}</span>
-              <span className="bg-zinc-800 px-3 py-1 rounded">{movie.release_date?.split('-')[0]}</span>
-              <span className="bg-zinc-800 px-3 py-1 rounded">{movie.runtime} Menit</span>
-            </div>
+          {/* 3. INFORMASI & SINOPSIS */}
+<div className="flex-1">
+  <h1 className="text-5xl font-black mb-4 uppercase tracking-tighter text-red-600 italic">
+    {movie.title}
+  </h1>
+  
+  <div className="flex flex-wrap items-center gap-3 text-sm font-bold text-zinc-400 mb-8">
+    {/* Rating */}
+    <span className="text-yellow-400 text-lg flex items-center gap-1">
+      ★ {movie.vote_average?.toFixed(1)}
+    </span>
 
-            <div className="mb-10">
-              <h2 className="text-xl font-bold mb-3 border-l-4 border-red-600 pl-3">Sinopsis</h2>
-              <p className="text-zinc-400 text-lg leading-relaxed italic mb-6">
-                {movie.overview || "Sinopsis belum tersedia untuk film ini."}
-              </p>
+    {/* Tahun Rilis */}
+    <span className="bg-zinc-800 px-3 py-1 rounded border border-zinc-700">
+      {movie.release_date?.split('-')[0] || 'N/A'}
+    </span>
+
+    {/* Durasi */}
+    <span className="bg-zinc-800 px-3 py-1 rounded border border-zinc-700">
+      {movie.runtime} Menit
+    </span>
+
+    {/* Daftar Genre */}
+    <div className="flex flex-wrap gap-2">
+      {movie.genres?.map((genre) => (
+        <span 
+          key={genre.id} 
+          className="bg-red-600/10 text-red-500 px-3 py-1 rounded border border-red-600/20 text-[10px] uppercase tracking-wider"
+        >
+          {genre.name}
+        </span>
+      ))}
+    </div>
+  </div>
+
+  <div className="mb-10">
+    <h2 className="text-xl font-bold mb-3 border-l-4 border-red-600 pl-3">Sinopsis</h2>
+    <p className="text-zinc-400 text-lg leading-relaxed italic mb-6">
+      {movie.overview || "Sinopsis belum tersedia untuk film ini."}
+    </p>
+
+    {/* IKLAN DI BAWAH SINOPSIS */}
+    <div className="my-8">
+      <AdBanner />
+    </div>
+  </div>
+  
+  {/* ... bagian Player dan lainnya ... */}
+</div>
+
 
               {/* IKLAN DI BAWAH SINOPSIS */}
               <div className="my-8">
