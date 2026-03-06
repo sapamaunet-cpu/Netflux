@@ -44,8 +44,8 @@ export default async function MoviePage({ params, searchParams }) {
             {/* Tombol ini akan menambah ?play=true ke URL tanpa refresh manual */}
             {!isPlaying && (
               <Link 
-                href={`?play=true`} 
-                scroll={false}
+                href={`?play=true#player`} 
+                scroll={true}
                 className="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-full font-black text-lg transition transform hover:scale-105"
               >
                 <span className="text-2xl">▶</span> TONTON SEKARANG
