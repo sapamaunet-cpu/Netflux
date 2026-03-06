@@ -58,28 +58,71 @@ export default async function MoviePage({ params, searchParams }) {
       <div className="max-w-6xl mx-auto px-4 mt-10">
         <div className="flex flex-col md:flex-row gap-10">
           
-          {/* Bagian Galeri Foto / Backdrop Slider */}
-{movie.images?.backdrops?.length > 0 && (
-  <div className="mt-10">
-    <div className="flex items-center gap-3 mb-4">
-      <div className="h-6 w-1 bg-red-600 rounded-full"></div>
-      <h3 className="text-lg font-bold uppercase tracking-wider">Galeri Foto</h3>
+          "use client"
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { FreeMode, Pagination } from 'swiper/modules';
+
+// Import CSS Swiper
+import 'swiper/css';
+import 'swiper/css/free-mode';
+import 'swiper/css/pagination';
+
+export default function MovieGallery({ movie }) {
+  // Ambil data poster tambahan
+  const extraPosters = movie.images?.posters || [];
+  
+  // Jika tidak ada galeri tambahan, gunakan poster utama sebagai satu-satunya slide
+  const displayPosters = extraPosters.length > 0 
+    ? extraPosters.slice(0, 12) 
+    : [{ file_path: movie.poster_path }];
+
+  // Jika poster utama pun tidak ada (kasus langka), jangan tampilkan apa-apa
+  if (!movie.poster_path && extraPosters.length === 0) return null;
+
+  return (
+    <div className="mt-10 px-4">
+      <div className="flex items-center gap-2 mb-4">
+        <div className="h-5 w-1 bg-red-600"></div>
+        <h3 className="text-md font-bold uppercase italic tracking-wider text-zinc-100">
+          {extraPosters.length > 0 ? 'Galeri Poster' : 'Poster Film'}
+        </h3>
+      </div>
+
+      <Swiper
+        slidesPerView={extraPosters.length > 0 ? 2.5 : 1} // Jika cuma 1 poster, buat full width
+        centeredSlides={extraPosters.length === 0} // Tengah jika cuma 1
+        spaceBetween={12}
+        freeMode={true}
+        pagination={{ clickable: true }}
+        modules={[FreeMode, Pagination]}
+        className="pb-8"
+      >
+        {displayPosters.map((img, index) => (
+          <SwiperSlide key={index}>
+            <div className={`rounded-xl overflow-hidden border border-zinc-800 shadow-2xl bg-zinc-900 ${extraPosters.length === 0 ? 'max-w-[280px] mx-auto' : ''}`}>
+              <img
+                src={`https://image.tmdb.org/t/p/w500${img.file_path}`}
+                alt={movie.title}
+                className="w-full h-auto object-cover hover:scale-105 transition-transform duration-500"
+                loading="lazy"
+              />
+            </div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
+
+      {/* Iklan Banner Detail 728x90 */}
+      <div className="mt-2">
+        <AdBanner type="detail" />
+      </div>
+
+      <style jsx global>{`
+        .swiper-pagination-bullet { background: #3f3f46; opacity: 1; }
+        .swiper-pagination-bullet-active { background: #dc2626; width: 20px; border-radius: 4px; }
+      `}</style>
     </div>
-    
-    <div className="flex overflow-x-auto gap-4 pb-4 scrollbar-hide">
-      {movie.images.backdrops.slice(0, 8).map((img, index) => (
-        <div key={index} className="flex-none w-64 md:w-80 aspect-video relative rounded-xl overflow-hidden border border-zinc-800 shadow-md">
-          <img 
-            src={`https://image.tmdb.org/t/p/w500${img.file_path}`} 
-            alt={`Screenshot ${index}`}
-            className="object-cover w-full h-full hover:scale-110 transition-transform duration-500"
-            loading="lazy"
-          />
-        </div>
-      ))}
-    </div>
-  </div>
-)}
+  );
+}
 
 
           {/* 3. INFORMASI & SINOPSIS */}
@@ -123,10 +166,7 @@ export default async function MoviePage({ params, searchParams }) {
     <p className="text-zinc-400 text-lg leading-relaxed italic mb-6">
       {movie.overview || "Sinopsis belum tersedia untuk film ini."}
     </p>
-              {/* IKLAN DI BAWAH SINOPSIS */}
-              <div className="my-8">
-                <AdBanner type="detail"/>
-              </div>
+               
             </div>
 
             {/* 4. PLAYER VIDEO (Hanya muncul jika URL memiliki ?play=true) */}
