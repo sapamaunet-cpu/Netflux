@@ -108,17 +108,6 @@ export default async function MoviePage({ params, searchParams }) {
     <p className="text-zinc-400 text-lg leading-relaxed italic mb-6">
       {movie.overview || "Sinopsis belum tersedia untuk film ini."}
     </p>
-
-    {/* IKLAN DI BAWAH SINOPSIS */}
-    <div className="my-8">
-      <AdBanner />
-    </div>
-  </div>
-  
-  {/* ... bagian Player dan lainnya ... */}
-</div>
-
-
               {/* IKLAN DI BAWAH SINOPSIS */}
               <div className="my-8">
                 <AdBanner />
