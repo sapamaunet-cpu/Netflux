@@ -1,6 +1,7 @@
 "use client"
-import { useState } from 'react';
-import Link from 'next/link';
+import { useState, Fragment } from 'react'; // Tambahkan Fragment
+import MovieCard from './MovieCard'; // Gunakan MovieCard agar seragam
+import AdBanner from './AdBanner'; // Import AdBanner
 
 export default function MovieList({ initialData, endpoint, query, limit = 0 }) {
   const [movies, setMovies] = useState(initialData.results || []);
@@ -26,23 +27,20 @@ export default function MovieList({ initialData, endpoint, query, limit = 0 }) {
 
   return (
     <div className="p-4">
+      {/* Grid disesuaikan agar sama dengan MovieCard */}
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6">
-        {movies.map((movie) => (
-          <Link href={`/movie/${movie.id}`} key={movie.id} className="group transition-transform hover:scale-105">
-            <div className="relative aspect-[2/3] bg-zinc-900 rounded-lg overflow-hidden border border-zinc-800 shadow-lg">
-              <img 
-                src={movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : 'https://placehold.co/500x750?text=No+Poster'} 
-                alt={movie.title} className="object-cover w-full h-full"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent p-3 flex flex-col justify-end">
-                <p className="font-bold text-sm truncate">{movie.title}</p>
-                <div className="flex justify-between items-center mt-1">
-                   <span className="text-yellow-400 text-xs">★ {movie.vote_average.toFixed(1)}</span>
-                   <span className="text-zinc-400 text-[10px]">{movie.release_date?.split('-')[0]}</span>
-                </div>
+        {movies.map((movie, index) => (
+          <Fragment key={movie.id}>
+            {/* Tampilkan MovieCard */}
+            <MovieCard movie={movie} />
+
+            {/* Sisipkan Iklan setiap 10 film */}
+            {(index + 1) % 10 === 0 && (
+              <div className="group">
+                <AdBanner />
               </div>
-            </div>
-          </Link>
+            )}
+          </Fragment>
         ))}
       </div>
 
