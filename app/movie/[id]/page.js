@@ -1,31 +1,35 @@
-import { getMovieDetail } from '../../../lib/tmdb';
+'use client'; // Pastikan ini adalah Client Component karena menggunakan State
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import MovieCard from '../../../components/MovieCard'; // Pastikan path ini benar
+import MovieCard from '../../../components/MovieCard';
+import AdBanner from '../../../components/AdBanner';
 
-export default async function MoviePage({ params }) {
-  const { id } = await params;
-  const movie = await getMovieDetail(id);
+export default function MoviePage({ params }) {
+  const [movie, setMovie] = useState(null);
+  const [showPlayer, setShowPlayer] = useState(false); // State untuk menyembunyikan player
+  const [loading, setLoading] = useState(true);
 
-  if (!movie || !movie.id) {
-    return (
-      <div className="min-h-screen bg-black text-white flex items-center justify-center p-10 text-center">
-        <div>
-          <h1 className="text-2xl font-bold text-red-600 mb-4">Gagal Memuat Film</h1>
-          <Link href="/" className="mt-6 inline-block bg-white text-black px-6 py-2 rounded-full font-bold">Kembali ke Home</Link>
-        </div>
-      </div>
-    );
-  }
+  useEffect(() => {
+    async function fetchData() {
+      const { id } = await params;
+      const res = await fetch(`/api/movie/${id}`); // Pastikan Anda memiliki route API untuk ini
+      const data = await res.json();
+      setMovie(data);
+      setLoading(false);
+    }
+    fetchData();
+  }, [params]);
 
-  // Ambil film terkait dari data movie (append_to_response sudah kita buat sebelumnya)
+  if (loading) return <div className="min-h-screen bg-black text-white flex items-center justify-center">Loading...</div>;
+  if (!movie) return <div className="min-h-screen bg-black text-white flex items-center justify-center text-red-600">Gagal Memuat Film</div>;
+
   const relatedMovies = movie.recommendations?.results?.slice(0, 5) || [];
 
   return (
     <div className="min-h-screen bg-black text-white pb-20">
       
-      {/* 1. HERO SECTION & TOMBOL TONTON */}
+      {/* 1. HERO SECTION */}
       <div className="relative w-full h-[50vh] md:h-[70vh] bg-zinc-900 shadow-2xl overflow-hidden group">
-        {/* Backdrop Image sebagai Background */}
         <img 
           src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`} 
           className="absolute inset-0 w-full h-full object-cover opacity-40"
@@ -33,21 +37,20 @@ export default async function MoviePage({ params }) {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
         
-        {/* Konten di Tengah Hero */}
         <div className="absolute inset-0 flex flex-col items-center justify-center p-4">
           <div className="max-w-3xl text-center">
             <h2 className="text-sm font-bold text-red-600 uppercase tracking-[0.4em] mb-4">Nonton Film Online</h2>
-            <h1 className="text-4xl md:text-6xl font-black mb-6 uppercase tracking-tighter drop-shadow-2xl">
+            <h1 className="text-4xl md:text-6xl font-black mb-6 uppercase tracking-tighter">
               {movie.title}
             </h1>
             
-            {/* Link Anchor ke bagian Player di bawah */}
-            <a 
-              href="#player" 
-              className="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-full font-black text-lg transition transform hover:scale-105"
+            {/* Tombol yang mengaktifkan Player */}
+            <button 
+              onClick={() => setShowPlayer(true)} 
+              className="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-full font-black text-lg transition transform hover:scale-105 shadow-[0_0_20px_rgba(220,38,38,0.5)]"
             >
               <span className="text-2xl">▶</span> TONTON SEKARANG
-            </a>
+            </button>
           </div>
         </div>
       </div>
@@ -68,7 +71,7 @@ export default async function MoviePage({ params }) {
 
           {/* 3. INFORMASI & SINOPSIS */}
           <div className="flex-1">
-            <h1 className="text-5xl font-black mb-4 uppercase tracking-tighter text-red-600">
+            <h1 className="text-5xl font-black mb-4 uppercase tracking-tighter text-red-600 italic">
               {movie.title}
             </h1>
             
@@ -80,12 +83,34 @@ export default async function MoviePage({ params }) {
 
             <div className="mb-10">
               <h2 className="text-xl font-bold mb-3 border-l-4 border-red-600 pl-3">Sinopsis</h2>
-              <p className="text-zinc-400 text-lg leading-relaxed italic">
+              <p className="text-zinc-400 text-lg leading-relaxed italic mb-8">
                 {movie.overview || "Sinopsis belum tersedia untuk film ini."}
               </p>
+
+              {/* IKLAN DI BAWAH SINOPSIS */}
+              <div className="my-8">
+                <AdBanner />
+              </div>
             </div>
 
-            {/* 4. PEMERAN UTAMA */}
+            {/* 4. PLAYER VIDEO (Hanya muncul jika tombol diklik) */}
+            {showPlayer && (
+              <div id="player" className="scroll-mt-24 mb-16 animate-fade-in">
+                 <h2 className="text-xl font-bold mb-5 border-l-4 border-red-600 pl-3 uppercase">Streaming Player</h2>
+                 <div className="w-full aspect-video bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-800 shadow-[0_0_50px_rgba(0,0,0,1)]">
+                  <iframe 
+                      src={`https://vidsrc.me/embed/movie?tmdb=${movie.id}`} 
+                      className="w-full h-full" 
+                      allowFullScreen 
+                  />
+                 </div>
+                 <p className="text-xs text-zinc-500 mt-4 italic text-center">
+                    *Gunakan pemblokir iklan browser jika merasa terganggu dengan iklan dari provider player.
+                 </p>
+              </div>
+            )}
+
+            {/* 5. PEMERAN UTAMA */}
             <div className="mb-12">
               <h2 className="text-xl font-bold mb-5 border-l-4 border-red-600 pl-3">Pemeran Utama</h2>
               <div className="flex gap-4 overflow-x-auto pb-4 no-scrollbar">
@@ -102,19 +127,6 @@ export default async function MoviePage({ params }) {
               </div>
             </div>
 
-            {/* 5. PLAYER VIDEO (MUNCUL SETELAH KLIK TONTON) */}
-            <div id="player" className="scroll-mt-24 mb-16">
-               <h2 className="text-xl font-bold mb-5 border-l-4 border-red-600 pl-3">Streaming Player</h2>
-               <div className="w-full aspect-video bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-800 shadow-2xl">
-                <iframe 
-                    src={`https://vidsrc.me/embed/movie?tmdb=${movie.id}`} 
-                    className="w-full h-full" 
-                    allowFullScreen 
-                />
-               </div>
-               <p className="text-xs text-zinc-500 mt-2 italic text-center">*Gunakan pemblokir iklan untuk kenyamanan menonton.</p>
-            </div>
-
             {/* 6. FILM TERKAIT */}
             {relatedMovies.length > 0 && (
               <div>
@@ -126,7 +138,6 @@ export default async function MoviePage({ params }) {
                 </div>
               </div>
             )}
-
           </div>
         </div>
       </div>
