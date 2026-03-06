@@ -96,9 +96,9 @@ export default function MovieList({ initialData, endpoint, query, title = "Rekom
                 <div className="mt-6 p-2 bg-zinc-900/30 rounded-lg border border-zinc-800/50 flex flex-col items-center">
                   <span className="text-[9px] text-zinc-600 mb-2 uppercase tracking-widest">Advertisement</span>
                   {Math.floor(itemNumber / 7) % 2 !== 0 ? (
-                    <AdBanner type="banner" />
-                  ) : (
                     <AdBanner type="native" />
+                  ) : (
+                    <AdBanner type="listBanner" />
                   )}
                 </div>
               )}
