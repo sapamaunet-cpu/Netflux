@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getMovieDetail } from '../../../../lib/tmdb'; // Sesuaikan jumlah ../ dengan struktur folder Anda
+import { getMovieDetail } from '../../../lib/tmdb'; // Sesuaikan jumlah ../ dengan struktur folder Anda
 
 export async function GET(request, { params }) {
   try {
