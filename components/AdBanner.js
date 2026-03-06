@@ -1,43 +1,78 @@
-'use client';
+"use client"
 import { useEffect, useRef } from 'react';
 
-export default function AdBanner() {
-  const containerRef = useRef(null);
+export default function AdBanner({ type = 'banner' }) {
+  const adRef = useRef(null);
 
   useEffect(() => {
-    // Cek apakah script sudah ada untuk menghindari duplikasi
-    const scriptId = 'adsterra-native-script';
-    let script = document.getElementById(scriptId);
-
-    if (!script) {
-      script = document.createElement('script');
-      script.id = scriptId;
-      script.async = true;
-      script.setAttribute('data-cfasync', 'false');
-      script.src = 'https://pl28859243.effectivegatecpm.com/42282ddbf82f3b276598eab445336106/invoke.js';
-      document.body.appendChild(script);
+    if (adRef.current) {
+      adRef.current.innerHTML = '';
     }
 
-    return () => {
-      // Optional: script biasanya dibiarkan tetap ada agar tidak re-load terus menerus
+    const adConfig = {
+      // 1. Iklan Besar untuk Halaman Detail
+      detail: {
+        key: 'c5d0a5671eae5764fbbe3fd3f46b6fa0', // Key 728x90 Anda
+        format: 'iframe',
+        height: 90,
+        width: 728,
+        src: 'https://www.highperformanceformat.com/c5d0a5671eae5764fbbe3fd3f46b6fa0/invoke.js'
+      },
+      // 2. Iklan Banner untuk MovieList
+      listBanner: {
+        key: '3da41b404358f1fdb8bfb35f0abc2de6', // Key 320x50 (dengan config 300x250 sesuai kode Anda)
+        format: 'iframe',
+        height: 250,
+        width: 300,
+        src: 'https://www.highperformanceformat.com/3da41b404358f1fdb8bfb35f0abc2de6/invoke.js'
+      },
+      // 3. Iklan Native untuk MovieList
+      native: {
+        key: '42282ddbf82f3b276598eab445336106',
+        containerId: 'container-42282ddbf82f3b276598eab445336106',
+        src: 'https://pl28859243.effectivegatecpm.com/42282ddbf82f3b276598eab445336106/invoke.js'
+      }
     };
-  }, []);
+
+    const config = adConfig[type] || adConfig.listBanner;
+
+    // Logika Banner (Detail & List)
+    if (type === 'detail' || type === 'listBanner') {
+      const scriptOptions = document.createElement('script');
+      scriptOptions.type = 'text/javascript';
+      scriptOptions.innerHTML = `
+        atOptions = {
+          'key' : '${config.key}',
+          'format' : '${config.format}',
+          'height' : ${config.height},
+          'width' : ${config.width},
+          'params' : {}
+        };
+      `;
+      adRef.current.appendChild(scriptOptions);
+    }
+
+    // Logika Native
+    if (type === 'native' && config.containerId) {
+      const containerDiv = document.createElement('div');
+      containerDiv.id = config.containerId;
+      adRef.current.appendChild(containerDiv);
+    }
+
+    // Load Invoke Script
+    const scriptInvoke = document.createElement('script');
+    scriptInvoke.type = 'text/javascript';
+    scriptInvoke.async = true;
+    scriptInvoke.src = config.src;
+    if (type === 'native') scriptInvoke.setAttribute('data-cfasync', 'false');
+
+    adRef.current.appendChild(scriptInvoke);
+
+  }, [type]);
 
   return (
-    <div className="relative overflow-hidden rounded-xl bg-zinc-900 aspect-[2/3] border border-zinc-800 flex flex-col items-center justify-center p-2">
-      <div className="absolute top-2 left-2 bg-red-600/20 text-red-500 text-[8px] font-bold px-1.5 py-0.5 rounded border border-red-600/30 uppercase tracking-tighter">
-        Sponsored
-      </div>
-      
-      {/* Container untuk Adsterra */}
-      <div 
-        id="container-42282ddbf82f3b276598eab445336106" 
-        className="w-full h-full flex items-center justify-center scale-90"
-      ></div>
-      
-      <div className="mt-3 text-[10px] font-bold text-zinc-500 uppercase tracking-tighter">
-        Promoted Content
-      </div>
+    <div className="w-full flex flex-col items-center justify-center my-4 min-h-[100px] overflow-hidden">
+      <div ref={adRef} className="w-full flex justify-center"></div>
     </div>
   );
 }
