@@ -58,15 +58,29 @@ export default async function MoviePage({ params, searchParams }) {
       <div className="max-w-6xl mx-auto px-4 mt-10">
         <div className="flex flex-col md:flex-row gap-10">
           
-          <div className="w-full md:w-80 flex-shrink-0">
-            <div className="sticky top-24">
-              <img 
-                src={movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : 'https://placehold.co/500x750?text=No+Poster'} 
-                alt={movie.title}
-                className="rounded-2xl shadow-2xl border border-zinc-800 w-full"
-              />
-            </div>
-          </div>
+          {/* Bagian Galeri Foto / Backdrop Slider */}
+{movie.images?.backdrops?.length > 0 && (
+  <div className="mt-10">
+    <div className="flex items-center gap-3 mb-4">
+      <div className="h-6 w-1 bg-red-600 rounded-full"></div>
+      <h3 className="text-lg font-bold uppercase tracking-wider">Galeri Foto</h3>
+    </div>
+    
+    <div className="flex overflow-x-auto gap-4 pb-4 scrollbar-hide">
+      {movie.images.backdrops.slice(0, 8).map((img, index) => (
+        <div key={index} className="flex-none w-64 md:w-80 aspect-video relative rounded-xl overflow-hidden border border-zinc-800 shadow-md">
+          <img 
+            src={`https://image.tmdb.org/t/p/w500${img.file_path}`} 
+            alt={`Screenshot ${index}`}
+            className="object-cover w-full h-full hover:scale-110 transition-transform duration-500"
+            loading="lazy"
+          />
+        </div>
+      ))}
+    </div>
+  </div>
+)}
+
 
           {/* 3. INFORMASI & SINOPSIS */}
 <div className="flex-1">
