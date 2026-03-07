@@ -45,7 +45,7 @@ export default async function MoviePage({ params, searchParams }) {
           )}
 
           {/* SINOPSIS & GENRE */}
-          <h2 className="text-3xl font-bold mb-4">{movie.title}</h2>
+           <h2 className="text-5xl font-black mb-4 uppercase tracking-tighter text-red-600">{movie.title}</h2>
        <div className="flex flex-wrap items-center gap-3 text-sm font-bold text-zinc-400 mb-8">
     {/* Rating */}
     <span className="text-yellow-400 text-lg flex items-center gap-1">
