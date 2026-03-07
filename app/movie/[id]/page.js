@@ -24,7 +24,7 @@ export default async function MoviePage({ params, searchParams }) {
           alt="Backdrop"
         />
         <div className="absolute inset-0 flex flex-col items-center justify-center p-4">
-          <h1 className="text-4xl font-black mb-6 uppercase text-center">{movie.title}</h1>
+          <h1 className="text-4xl md:text-6xl font-black mb-6 uppercase tracking-tighter drop-shadow-2xl">{movie.title}</h1>
           {!isPlaying && (
             <Link href={`?play=true#player`} className="bg-red-600 px-8 py-4 rounded-full font-black">
               TONTON SEKARANG
@@ -61,13 +61,15 @@ export default async function MoviePage({ params, searchParams }) {
     <span className="bg-zinc-800 px-3 py-1 rounded border border-zinc-700">
       {movie.runtime} Menit
     </span>
-   <span className="bg-zinc-800 px-3 py-1 rounded border border-zinc-700">
+   
             {movie.genres?.map(g => (
+          <span className="bg-zinc-800 px-3 py-1 rounded border border-zinc-700">
               <Link key={g.id} href={`/genre/${g.id}`} className="bg-zinc-800 px-3 py-1 rounded text-xs uppercase">
                 {g.name}
               </Link>
+         </span>
             ))}
-   </span>
+
         </div>
               
           <p className="text-zinc-400 mb-10">{movie.overview}</p>
