@@ -46,6 +46,22 @@ export default async function MoviePage({ params, searchParams }) {
 
           {/* SINOPSIS & GENRE */}
           <h2 className="text-3xl font-bold mb-4">{movie.title}</h2>
+       <div className="flex flex-wrap items-center gap-3 text-sm font-bold text-zinc-400 mb-8">
+    {/* Rating */}
+    <span className="text-yellow-400 text-lg flex items-center gap-1">
+      ★ {movie.vote_average?.toFixed(1)}
+    </span>
+
+    {/* Tahun Rilis */}
+    <span className="bg-zinc-800 px-3 py-1 rounded border border-zinc-700">
+      {movie.release_date?.split('-')[0] || 'N/A'}
+    </span>
+
+    {/* Durasi */}
+    <span className="bg-zinc-800 px-3 py-1 rounded border border-zinc-700">
+      {movie.runtime} Menit
+    </span>
+
           <div className="flex flex-wrap gap-2 mb-6">
             {movie.genres?.map(g => (
               <Link key={g.id} href={`/genre/${g.id}`} className="bg-zinc-800 px-3 py-1 rounded text-xs uppercase">
@@ -53,6 +69,7 @@ export default async function MoviePage({ params, searchParams }) {
               </Link>
             ))}
           </div>
+        </div>
           <p className="text-zinc-400 mb-10">{movie.overview}</p>
 
           {/* GALERI (Komponen Client) */}
