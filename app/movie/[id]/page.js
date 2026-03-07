@@ -61,15 +61,15 @@ export default async function MoviePage({ params, searchParams }) {
     <span className="bg-zinc-800 px-3 py-1 rounded border border-zinc-700">
       {movie.runtime} Menit
     </span>
-
-          <div className="flex flex-wrap gap-2 mb-6">
+   <span className="bg-zinc-800 px-3 py-1 rounded border border-zinc-700">
             {movie.genres?.map(g => (
               <Link key={g.id} href={`/genre/${g.id}`} className="bg-zinc-800 px-3 py-1 rounded text-xs uppercase">
                 {g.name}
               </Link>
             ))}
-          </div>
+   </span>
         </div>
+              
           <p className="text-zinc-400 mb-10">{movie.overview}</p>
 
           {/* GALERI (Komponen Client) */}
