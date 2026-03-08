@@ -76,7 +76,7 @@ export default function MovieList({ initialData, endpoint, query, title = "Rekom
               <Link href={`/movie/${movie.id}`} className="group block h-full">
                 <div className="relative aspect-[2/3] bg-zinc-900 rounded-xl overflow-hidden border border-zinc-800 shadow-lg transition-transform hover:scale-105 hover:border-red-600/50">
                   <img 
-                    src={movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : 'https://placehold.co/500x750?text=No+Poster'} 
+                    src={movie.poster_path ? `https://image.tmdb.org/t/p/w342${movie.poster_path}` : 'https://placehold.co/500x750?text=No+Poster'} 
                     alt={movie.title} 
                     className="object-cover w-full h-full"
                     loading="lazy"
