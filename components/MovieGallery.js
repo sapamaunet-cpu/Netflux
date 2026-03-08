@@ -38,12 +38,12 @@ export default function MovieGallery({ movie }) {
             rotate: 0,
             stretch: 0,
             depth: 100,
-            modifier: 2.5,
+            modifier: 1.5,
             slideShadows: false,
           }}
           breakpoints={{
-            640: { slidesPerView: 3 },
-            1024: { slidesPerView: 5 },
+            640: { slidesPerView: 3.2 },
+            1024: { slidesPerView: 5.2 },
           }}
           className="gallery-swiper !overflow-visible"
         >
@@ -54,7 +54,7 @@ export default function MovieGallery({ movie }) {
                   relative aspect-[2/3] rounded-2xl overflow-hidden border transition-all duration-500 shadow-2xl
                   ${isActive 
                     ? 'border-red-600 scale-100 z-10' 
-                    : 'border-zinc-800 scale-90 opacity-40 blur-[1px]'}
+                    : 'border-zinc-800 scale-90 opacity-30 blur-[2px]'}
                 `}>
                   <img
                     src={`https://image.tmdb.org/t/p/w500${img.file_path}`}
