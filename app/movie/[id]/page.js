@@ -5,6 +5,17 @@ import AdBanner from '../../../components/AdBanner';
 import MovieGallery from '../../../components/MovieGallery'; // Import komponen buatan kita tadi
 import MoviePlayer from '../../../components/MoviePlayer';
 
+// FUNGSI UNTUK GENERATE TITLE DINAMIS
+export async function generateMetadata({ params }) {
+  const { id } = await params;
+  const movie = await getMovieDetail(id);
+
+  return {
+    title: `${movie.title} (${movie.release_date?.split('-')[0]}) - BLOKMOVIE`,
+    description: movie.overview,
+  };
+}
+
 export default async function MoviePage({ params, searchParams }) {
   const { id } = await params;
   const sParams = await searchParams; // Next.js 15 wajib await searchParams
