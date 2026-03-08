@@ -32,56 +32,61 @@ export default async function MoviePage({ params, searchParams }) {
           )}
         </div>
       </div>
-
       <div className="max-w-6xl mx-auto px-4 mt-10 flex flex-col md:flex-row gap-10">
-        <div className="flex-1">
+        <div className="flex-1"> {/* Ini flex-1 utama */}
           {/* PLAYER */}
           {isPlaying && (
             <div id="player" className="mb-10">
-              <div className="aspect-video bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-800">
+              <div className="aspect-video bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-800 shadow-2xl">
                 <iframe src={`https://vidsrc.me/embed/movie?tmdb=${movie.id}`} className="w-full h-full" allowFullScreen />
               </div>
             </div>
           )}
 
-          {/* SINOPSIS & GENRE */}
-       <div className="flex-1">
-            <h1 className="text-5xl font-black mb-4 uppercase tracking-tighter text-red-600">
-              {movie.title}
-            </h1>
-           <div className="flex flex-wrap items-center gap-3 text-sm font-bold text-zinc-400 mb-8">
-    {/* Rating */}
-    <span className="text-yellow-400 text-lg flex items-center gap-1">
-      ★ {movie.vote_average?.toFixed(1)}
-    </span>
+          {/* SINOPSIS & INFO */}
+          <h1 className="text-5xl font-black mb-4 uppercase tracking-tighter text-red-600 italic">
+            {movie.title}
+          </h1>
+          
+          <div className="flex flex-wrap items-center gap-3 text-sm font-bold text-zinc-400 mb-8">
+            {/* Rating */}
+            <span className="text-yellow-400 text-lg flex items-center gap-1">
+              ★ {movie.vote_average?.toFixed(1)}
+            </span>
 
-    {/* Tahun Rilis */}
-    <span className="bg-zinc-800 px-3 py-1 rounded border border-zinc-700">
-      {movie.release_date?.split('-')[0] || 'N/A'}
-    </span>
+            {/* Tahun Rilis */}
+            <span className="bg-zinc-800 px-3 py-1 rounded border border-zinc-700">
+              {movie.release_date?.split('-')[0] || 'N/A'}
+            </span>
 
-    {/* Durasi */}
-    <span className="bg-zinc-800 px-3 py-1 rounded border border-zinc-700">
-      {movie.runtime} Menit
-    </span>
+            {/* Durasi */}
+            <span className="bg-zinc-800 px-3 py-1 rounded border border-zinc-700">
+              {movie.runtime} Menit
+            </span>
    
+            {/* Genre */}
             {movie.genres?.map(g => (
-          <span className="bg-zinc-800 px-3 py-1 rounded border border-zinc-700">
-              <Link key={g.id} href={`/genre/${g.id}`} className="bg-zinc-800 px-3 py-1 rounded text-xs uppercase">
+              <Link 
+                key={g.id} 
+                href={`/genre/${g.id}`} 
+                className="bg-red-600/10 text-red-500 px-3 py-1 rounded border border-red-600/20 text-[10px] uppercase tracking-wider hover:bg-red-600 hover:text-white transition-all"
+              >
                 {g.name}
               </Link>
-         </span>
             ))}
-
-        </div>
+          </div>
               
-          <p className="text-zinc-400 mb-10">{movie.overview}</p>
+          <p className="text-zinc-400 text-lg leading-relaxed mb-10 italic">
+            {movie.overview || "Sinopsis belum tersedia."}
+          </p>
 
           {/* GALERI (Komponen Client) */}
           <MovieGallery movie={movie} />
 
           {/* IKLAN BANNER */}
-          <AdBanner type="detail" />
+          <div className="my-10">
+            <AdBanner type="detail" />
+          </div>
 
             {/* 4. PEMERAN UTAMA */}
             <div className="mb-12">
