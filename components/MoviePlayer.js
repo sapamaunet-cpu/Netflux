@@ -20,9 +20,8 @@ export default function MoviePlayer({ movieId }) {
           src={activeServer.url}
           className="w-full h-full"
           allowFullScreen
-          // Sandbox melindungi laptop 2GB Anda dari iklan berlebih
-          sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation"
-        ></iframe>
+          >
+          </iframe>
       </div>
 
       {/* TOMBOL GANTI SERVER */}
