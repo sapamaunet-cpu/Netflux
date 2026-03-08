@@ -16,46 +16,49 @@ export default function MovieGallery({ movie }) {
     : [{ file_path: movie.poster_path }];
 
   return (
-    <div className="mt-12 mb-10 group">
+    <div className="mt-12 mb-10 group overflow-hidden"> {/* Tambah overflow-hidden */}
       <div className="flex items-center gap-3 mb-6 px-4">
         <div className="h-6 w-1.5 bg-red-600 rounded-full"></div>
-        <h3 className="text-lg font-black uppercase tracking-widest text-white italic">
+        <h3 className="text-lg font-black uppercase tracking-widest text-white italic font-cinema">
           Galeri Poster
         </h3>
       </div>
 
-      <div className="relative overflow-hidden py-4">
+      <div className="relative overflow-visible py-4"> {/* overflow-visible */}
         <Swiper
-          modules={[Navigation, Pagination, EffectCoverflow]}
-          effect={'coverflow'} // Memberikan efek kedalaman sedikit
-          centeredSlides={true} // Poster utama di tengah
-          slidesPerView={1.8} // Menampilkan 1 full di tengah + potongan kiri & kanan
-          spaceBetween={0} // Jarak antar slide
-          loop={displayPosters.length > 2} // Aktifkan loop jika gambar cukup
+          modules={[Navigation, Pagination]} // Matikan Coverflow, gunakan yang standar dulu
+          centeredSlides={true}
+          loop={displayPosters.length > 2}
           navigation={true}
           pagination={{ clickable: true, dynamicBullets: true }}
-          coverflowEffect={{
-            rotate: 0,
-            stretch: 0,
-            depth: 100,
-            modifier: 1.5,
-            slideShadows: false,
-          }}
+          // --- INI PERUBAHAN UTAMANYA ---
+          // Kita tentukan slidesPerView secara dinamis menggunakan calc()
+          slidesPerView={'auto'} // Biarkan Swiper menghitung dari CSS slide
           breakpoints={{
-            640: { slidesPerView: 3.2 },
-            1024: { slidesPerView: 5.2 },
+            // Mobile (Redmi Note 8): Slide utama hampir full
+            0: {
+              slidesPerView: 'auto',
+              spaceBetween: -10, // Sedikit rapat
+            },
+            // Desktop: Tampilkan banyak
+            1024: {
+              slidesPerView: 5,
+              spaceBetween: 25,
+            },
           }}
           className="gallery-swiper !overflow-visible"
         >
           {displayPosters.map((img, index) => (
-            <SwiperSlide key={index}>
+            // Kita atur lebar SwiperSlide di mobile agar besar
+            <SwiperSlide key={index} style={{ width: 'calc(100% - 40px)' }} className="sm:!w-auto"> 
               {({ isActive }) => (
                 <div className={`
-                  relative aspect-[2/3] rounded-2xl overflow-hidden border transition-all duration-500 shadow-2xl
+                  relative aspect-[2/3] rounded-2xl overflow-hidden border transition-all duration-300 shadow-2xl
                   ${isActive 
-                    ? 'border-red-600 scale-100 z-10' 
-                    : 'border-zinc-800 scale-90 opacity-30 blur-[2px]'}
+                    ? 'border-red-600' 
+                    : 'border-zinc-800 opacity-20 blur-[2px]'} 
                 `}>
+                {/* Naikkan opacity non-aktif ke 30% atau 40% jika dirasa terlalu gelap */}
                   <img
                     src={`https://image.tmdb.org/t/p/w500${img.file_path}`}
                     alt="Poster"
