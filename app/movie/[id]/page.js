@@ -63,7 +63,22 @@ export default async function MoviePage({ params, searchParams }) {
             <span className="bg-zinc-800 px-3 py-1 rounded border border-zinc-700">
               {movie.runtime} Menit
             </span>
-   
+
+   {/* Label Negara dengan Bendera */}
+{movie.production_countries?.slice(0, 1).map((country) => (
+  <div key={country.iso_3166_1} className="flex items-center gap-2 bg-zinc-800/50 px-3 py-1 rounded border border-zinc-700">
+    <img 
+      src={`https://purecatbeforesunrise.github.io/history-test/flags/${country.iso_3166_1.toLowerCase()}.png`}
+      alt={country.name}
+      className="w-4 h-auto shadow-sm"
+      onError={(e) => e.target.style.display = 'none'} // Sembunyikan jika bendera tidak ketemu
+    />
+    <span className="text-[11px] uppercase tracking-tighter text-zinc-300">
+      {country.name}
+    </span>
+  </div>
+))}
+
             {/* Genre */}
             {movie.genres?.map(g => (
               <Link 
