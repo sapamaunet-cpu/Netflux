@@ -40,7 +40,7 @@ export default async function MoviePage({ params, searchParams }) {
             <div id="player" className="mb-10">
               <div className="aspect-video bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-800 shadow-2xl">
           {/* <iframe src={`https://vidsrc.me/embed/movie?tmdb=${movie.id}`} className="w-full h-full" allowFullScreen /> */}
-            <MoviePlayer movieId=${movie.id} />
+            <MoviePlayer movieId={movie.id} />
               </div>
             </div>
           )}
