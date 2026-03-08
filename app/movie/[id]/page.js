@@ -113,7 +113,17 @@ export default async function MoviePage({ params, searchParams }) {
 
           {/* IKLAN BANNER */}
           <div className="my-10">
-            <AdBanner type="detail" />
+          {/*  <AdBanner type="detail" /> */}
+            <script>
+  atOptions = {
+    'key' : 'c5d0a5671eae5764fbbe3fd3f46b6fa0',
+    'format' : 'iframe',
+    'height' : 90,
+    'width' : 728,
+    'params' : {}
+  };
+</script>
+<script src="https://www.highperformanceformat.com/c5d0a5671eae5764fbbe3fd3f46b6fa0/invoke.js"></script>
           </div>
 
             {/* 4. PEMERAN UTAMA */}
