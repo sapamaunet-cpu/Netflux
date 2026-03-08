@@ -1,6 +1,14 @@
 import { getMovies, getCountryName } from '../../../lib/tmdb';
 import MovieList from '../../../components/MovieList';
 
+export async function generateMetadata({ params }) {
+  const { iso } = await params;
+  const name = getCountryName(iso);
+  return {
+    title: `Nonton Film ${name} Sub Indo - BLOKMOVIE`,
+  };
+}
+
 export default async function CountryPage({ params }) {
   // Ambil kode negara (misal: 'id', 'us', 'kr') dari URL
   const { iso } = await params;
