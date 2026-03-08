@@ -1,6 +1,13 @@
 import { getMovies } from '../../../lib/tmdb';
 import MovieList from '../../../components/MovieList';
 
+export async function generateMetadata({ searchParams }) {
+  const name = searchParams.name || 'Kategori';
+  return {
+    title: `Film Genre ${name} Terbaru - BLOKMOVIE`,
+  };
+}
+
 export default async function GenrePage({ params, searchParams }) {
   const genreId = params.id;
   const genreName = searchParams.name || 'Kategori';
