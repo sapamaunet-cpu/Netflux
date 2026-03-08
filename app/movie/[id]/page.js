@@ -74,22 +74,22 @@ export default async function MoviePage({ params, searchParams }) {
 
 {/* Label Negara dengan Bendera */}
 {movie.production_countries?.slice(0, 1).map((country) => (
-  <div key={country.iso_3166_1} className="flex items-center gap-2 bg-zinc-800/50 px-3 py-1 rounded border border-zinc-700">
-<Link 
-  href={`/country/${country.iso_3166_1.toLowerCase()}`}
-  className="flex items-center gap-2 bg-zinc-800/50 px-3 py-1 rounded border border-zinc-700 hover:border-red-600 transition-all"
->
-  <img 
-    src={`https://flagcdn.com/w40/${country.iso_3166_1.toLowerCase()}.png`}
-    className="w-4 h-auto"
-    alt="flag"
-  />
-  <span className="text-[11px] uppercase tracking-tighter text-zinc-300 font-bold">
-    {country.iso_3166_1 === "US" ? "USA" : country.name}
-  </span>
-</Link>
-    </div>
+  <Link 
+    key={country.iso_3166_1}
+    href={`/country/${country.iso_3166_1.toLowerCase()}`}
+    className="flex items-center gap-2 bg-zinc-800/50 px-3 py-1 rounded border border-zinc-700 hover:border-red-600 transition-all"
+  >
+    <img 
+      src={`https://flagcdn.com/w40/${country.iso_3166_1.toLowerCase()}.png`}
+      className="w-4 h-auto"
+      alt="flag"
+    />
+    <span className="text-[11px] uppercase tracking-tighter text-zinc-300 font-bold">
+      {country.iso_3166_1 === "US" ? "USA" : country.name}
+    </span>
+  </Link>
 ))}
+
 
             {/* Genre */}
             {movie.genres?.map(g => (
@@ -129,7 +129,6 @@ export default async function MoviePage({ params, searchParams }) {
     }}
   />
 </div>
-    </div>
 
             {/* 4. PEMERAN UTAMA */}
             <div className="mb-12">
