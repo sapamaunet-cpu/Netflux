@@ -64,17 +64,17 @@ export default async function MoviePage({ params, searchParams }) {
               {movie.runtime} Menit
             </span>
 
-   {/* Label Negara dengan Bendera */}
+{/* Label Negara dengan Bendera */}
 {movie.production_countries?.slice(0, 1).map((country) => (
   <div key={country.iso_3166_1} className="flex items-center gap-2 bg-zinc-800/50 px-3 py-1 rounded border border-zinc-700">
     <img 
-      src={`https://purecatbeforesunrise.github.io/history-test/flags/${country.iso_3166_1.toLowerCase()}.png`}
+      src={`https://flagcdn.com/w40/${country.iso_3166_1.toLowerCase()}.png`}
       alt={country.name}
-      className="w-4 h-auto shadow-sm"
-      onError={(e) => e.target.style.display = 'none'} // Sembunyikan jika bendera tidak ketemu
+      className="w-5 h-auto rounded-sm shadow-sm"
+      // Kita hapus onError untuk menghindari error 500 di Vercel
     />
-    <span className="text-[11px] uppercase tracking-tighter text-zinc-300">
-      {country.name}
+    <span className="text-[11px] uppercase tracking-tighter text-zinc-300 font-jakarta font-bold">
+      {country.iso_3166_1 === "US" ? "USA" : country.name}
     </span>
   </div>
 ))}
