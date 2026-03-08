@@ -1,53 +1,45 @@
-import { getMoviesByCountry, getCountryName } from '../../../lib/tmdb';
-import MovieCard from '../../../components/MovieCard';
-import Link from 'next/link';
+import { getMovies, getCountryName } from '../../../lib/tmdb';
+import MovieList from '../../../components/MovieList';
 
 export default async function CountryPage({ params }) {
+  // Ambil kode negara (misal: 'id', 'us', 'kr') dari URL
   const { iso } = await params;
+  const countryCode = iso.toUpperCase();
   
-  // Mengambil data film berdasarkan kode negara ISO 3166-1
-  const movies = await getMoviesByCountry(iso.toUpperCase());
-  const countryName = getCountryName(iso.toUpperCase());
-
-  if (!movies || movies.length === 0) {
-    return (
-      <div className="min-h-screen bg-black text-white flex items-center justify-center p-10 text-center">
-        <div>
-          <h1 className="text-2xl font-bold text-red-600 mb-4 font-jakarta">Data Tidak Ditemukan</h1>
-          <Link href="/" className="bg-white text-black px-6 py-2 rounded-full font-bold">Kembali</Link>
-        </div>
-      </div>
-    );
-  }
+  // Ambil nama lengkap negara untuk judul (Indonesia, USA, dll)
+  const countryName = getCountryName(countryCode);
+  
+  // Endpoint discover untuk memfilter berdasarkan Origin Country
+  const endpoint = `/discover/movie?with_origin_country=${countryCode}`;
+  const initialData = await getMovies(endpoint, 1);
 
   return (
-    <div className="min-h-screen bg-black text-white pb-20 font-jakarta">
-      {/* HEADER NEGARA */}
-      <div className="pt-24 pb-10 px-4 max-w-7xl mx-auto">
-        <div className="flex items-center gap-3 mb-4">
-          <Link href="/" className="text-zinc-500 hover:text-white transition-all text-sm">← Home</Link>
-          <span className="text-zinc-800">|</span>
-          <span className="text-red-600 font-bold uppercase tracking-widest text-[10px]">Asal Produksi</span>
+    <div className="max-w-7xl mx-auto py-8 font-jakarta">
+      <div className="px-4 mb-8">
+        <div className="flex items-center gap-3">
+          <div className="h-10 w-2 bg-red-600 rounded-full"></div>
+          <div>
+            <h1 className="text-3xl font-black uppercase tracking-widest text-white italic font-cinema">
+              Film {countryName}
+            </h1>
+            <p className="text-zinc-500 text-sm">
+              Koleksi sinematografi terbaik dari {countryName}
+            </p>
+          </div>
         </div>
-        
-        <div className="flex items-center gap-4">
-           <h1 className="text-5xl md:text-7xl font-cinema text-white uppercase italic tracking-tighter">
-            Film {countryName}
-          </h1>
-        </div>
-        <p className="text-zinc-500 mt-4 max-w-2xl leading-relaxed">
-          Menampilkan daftar film terbaik yang diproduksi di {countryName}. Jelajahi sinematografi khas dari wilayah ini.
-        </p>
       </div>
 
-      {/* GRID DAFTAR FILM */}
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
-          {movies.map((movie) => (
-            <MovieCard key={movie.id} movie={movie} />
-          ))}
+      {initialData.results?.length > 0 ? (
+        <MovieList 
+          initialData={initialData} 
+          endpoint={endpoint} 
+          limit={0} // Akan memuat data sesuai pagination TMDB
+        />
+      ) : (
+        <div className="text-center py-20 text-zinc-500">
+          <p className="italic">Data tidak ditemukan untuk negara ini.</p>
         </div>
-      </div>
+      )}
     </div>
   );
 }
