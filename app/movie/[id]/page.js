@@ -67,7 +67,6 @@ export default async function MoviePage({ params, searchParams }) {
 {/* Label Negara dengan Bendera */}
 {movie.production_countries?.slice(0, 1).map((country) => (
   <div key={country.iso_3166_1} className="flex items-center gap-2 bg-zinc-800/50 px-3 py-1 rounded border border-zinc-700">
-    {/* Pastikan Link mengarah ke /country/[iso] */}
 <Link 
   href={`/country/${country.iso_3166_1.toLowerCase()}`}
   className="flex items-center gap-2 bg-zinc-800/50 px-3 py-1 rounded border border-zinc-700 hover:border-red-600 transition-all"
