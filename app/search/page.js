@@ -1,6 +1,13 @@
 import { getMovies } from '../../lib/tmdb';
 import MovieList from '../../components/MovieList';
 
+export async function generateMetadata({ searchParams }) {
+  const query = searchParams.q || '';
+  return {
+    title: query ? `Hasil Pencarian: ${query} - BLOKMOVIE` : 'Cari Film Favorit - BLOKMOVIE',
+  };
+}
+
 // Memaksa halaman agar tidak dirender statis (mencegah error build)
 export const dynamic = 'force-dynamic';
 
