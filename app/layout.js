@@ -2,6 +2,13 @@ import './globals.css';
 import Link from 'next/link';
 import SearchBar from '../components/SearchBar'; // Import komponen tadi
 
+export const metadata = {
+  title: {
+    default: 'BLOKMOVIE - Nonton Film Sub Indo Gratis',
+    template: '%s | BLOKMOVIE'
+  },
+  description: 'Streaming film terbaru dengan kualitas terbaik',
+};
 
 export default function RootLayout({ children }) {
   const genres = [
