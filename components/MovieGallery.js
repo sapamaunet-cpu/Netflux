@@ -29,7 +29,7 @@ export default function MovieGallery({ movie }) {
           modules={[Navigation, Pagination, EffectCoverflow]}
           effect={'coverflow'} // Memberikan efek kedalaman sedikit
           centeredSlides={true} // Poster utama di tengah
-          slidesPerView={1.5} // Menampilkan 1 full di tengah + potongan kiri & kanan
+          slidesPerView={1.8} // Menampilkan 1 full di tengah + potongan kiri & kanan
           spaceBetween={0} // Jarak antar slide
           loop={displayPosters.length > 2} // Aktifkan loop jika gambar cukup
           navigation={true}
