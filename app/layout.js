@@ -58,7 +58,7 @@ export default function RootLayout({ children }) {
         <main>{children}</main>
 
         <footer className="py-10 text-center text-zinc-500 text-xs border-t border-zinc-900 mt-20">
-          <p>© 2026 NETFLUX - Power by TMDB API</p>
+          <p>© 2026 <span class="text-white">BLOCK</span><span class="text-red">movies</span> - Power by TMDB API</p>
         </footer>
       </body>
     </html>
