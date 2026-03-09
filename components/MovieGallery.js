@@ -54,6 +54,7 @@ export default function MovieGallery({ movie }) {
               {({ isActive }) => (
                 <div className={`
                   poster-container
+                  relative aspect-[2/3] rounded-2xl overflow-hidden border transition-all duration-300 shadow-2xl
                   ${isActive 
                     ? 'border-red-600' 
                     : 'border-zinc-800 opacity-20 blur-[2px]'} 
