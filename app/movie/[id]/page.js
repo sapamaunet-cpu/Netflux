@@ -30,11 +30,20 @@ export default async function MoviePage({ params, searchParams }) {
     <div className="min-h-screen bg-black text-white pb-20">
       {/* HERO SECTION */}
       <div className="relative w-full h-[50vh] bg-zinc-900 overflow-hidden">
-        <img 
-          src={`https://image.tmdb.org/t/p/w1280${movie.backdrop_path}`} 
-          className="absolute inset-0 w-full h-full object-cover opacity-40"
-          alt="Backdrop"
-        />
+   <img 
+    // Default fallback
+    src={`https://image.tmdb.org/t/p/w780${movie.backdrop_path}`}
+    // Pilihan cerdas: 780 untuk HP, 1280 untuk layar lebar
+    srcSet={`
+      https://image.tmdb.org/t/p/w780${movie.backdrop_path} 780w,
+      https://image.tmdb.org/t/p/w1280${movie.backdrop_path} 1280w
+    `}
+    sizes="(max-width: 1024px) 780px, 1280px"
+    alt={movie.title}
+    className="absolute inset-0 w-full h-full object-cover opacity-60"
+    loading="eager" // Backdrop harus dimuat paling awal
+    priority="true" // Jika menggunakan Next.js Image component
+  />
         <div className="absolute inset-0 flex flex-col items-center justify-center p-4">
           <h1 className="text-4xl md:text-6xl font-black mb-6 uppercase tracking-tighter drop-shadow-2xl">{movie.title}</h1>
           {!isPlaying && (
