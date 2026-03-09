@@ -31,7 +31,7 @@ export default async function MoviePage({ params, searchParams }) {
       {/* HERO SECTION */}
       <div className="relative w-full h-[50vh] bg-zinc-900 overflow-hidden">
         <img 
-          src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`} 
+          src={`https://image.tmdb.org/t/p/w1280${movie.backdrop_path}`} 
           className="absolute inset-0 w-full h-full object-cover opacity-40"
           alt="Backdrop"
         />
