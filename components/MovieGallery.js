@@ -1,53 +1,64 @@
 "use client"
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination } from 'swiper/modules';
+import { Navigation, Pagination, EffectCoverflow } from 'swiper/modules';
 
+// Import CSS Swiper
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import 'swiper/css/effect-coverflow';
 
 export default function MovieGallery({ movie }) {
   const extraPosters = movie.images?.posters || [];
+  
   const displayPosters = extraPosters.length > 0 
     ? extraPosters.slice(0, 15) 
     : [{ file_path: movie.poster_path }];
 
   return (
-    <div className="mt-12 mb-10 overflow-hidden w-full">
-      <div className="flex items-center gap-3 mb-6 px-4 max-w-6xl mx-auto">
+    <div className="mt-12 mb-10 group overflow-hidden"> {/* Tambah overflow-hidden */}
+      <div className="flex items-center gap-3 mb-6 px-4">
         <div className="h-6 w-1.5 bg-red-600 rounded-full"></div>
         <h3 className="text-lg font-black uppercase tracking-widest text-white italic font-cinema">
           Galeri Poster
         </h3>
       </div>
 
-      {/* Container Utama harus Full Width agar CenteredSlides punya ruang hitung */}
-      <div className="w-full relative py-8">
+      <div className="relative overflow-visible py-4"> {/* overflow-visible */}
         <Swiper
-          modules={[Navigation, Pagination]}
-          centeredSlides={true} 
-          loop={displayPosters.length > 5}
+          modules={[Navigation, Pagination]} // Matikan Coverflow, gunakan yang standar dulu
+          centeredSlides={true}
+          loop={displayPosters.length > 2}
           navigation={true}
           pagination={{ clickable: true, dynamicBullets: true }}
-          // KUNCI UTAMA: slidesPerView harus disesuaikan antara HP dan PC
-          slidesPerView={1.5} 
+          // --- INI PERUBAHAN UTAMANYA ---
+          // Kita tentukan slidesPerView secara dinamis menggunakan calc()
+          slidesPerView={'auto'} // Biarkan Swiper menghitung dari CSS slide
           breakpoints={{
-            640: { slidesPerView: 2 },
-            1024: { slidesPerView: 4 }, // Menampilkan 4 slide, yang aktif tetap di tengah
-            1280: { slidesPerView: 5 }
+            // Mobile (Redmi Note 8): Slide utama hampir full
+            0: {
+              slidesPerView: 'auto',
+              spaceBetween: -10, // Sedikit rapat
+            },
+            // Desktop: Tampilkan banyak
+            1024: {
+              slidesPerView: 5,
+              spaceBetween: 25,
+            },
           }}
-          spaceBetween={30}
           className="gallery-swiper !overflow-visible"
         >
           {displayPosters.map((img, index) => (
-            <SwiperSlide key={index} className="pb-10"> 
+            // Kita atur lebar SwiperSlide di mobile agar besar
+            <SwiperSlide key={index} style={{ width: 'calc(100% - 40px)' }} className="sm:!w-auto"> 
               {({ isActive }) => (
                 <div className={`
-                  relative aspect-[2/3] rounded-2xl overflow-hidden border transition-all duration-700 ease-in-out shadow-2xl
+                  relative aspect-[2/3] rounded-2xl overflow-hidden border transition-all duration-300 shadow-2xl
                   ${isActive 
-                    ? 'border-red-600 scale-110 z-50 opacity-100 blur-0 shadow-red-600/20' 
-                    : 'border-zinc-800 opacity-30 scale-90 blur-[1.5px]'} 
+                    ? 'border-red-600' 
+                    : 'border-zinc-800 opacity-20 blur-[2px]'} 
                 `}>
+                {/* Naikkan opacity non-aktif ke 30% atau 40% jika dirasa terlalu gelap */}
                   <img
                     src={`https://image.tmdb.org/t/p/w500${img.file_path}`}
                     alt="Poster"
@@ -62,30 +73,22 @@ export default function MovieGallery({ movie }) {
       </div>
 
       <style jsx global>{`
-        /* Menghilangkan potongan pada container */
-        .gallery-swiper.swiper {
-          overflow: visible !important;
-          width: 100%;
-          padding: 0 10%; /* Memberi ruang di samping agar slide tetangga terlihat */
-        }
-        
         .gallery-swiper .swiper-button-next, 
         .gallery-swiper .swiper-button-prev {
           color: white;
-          background: rgba(220, 38, 38, 0.8);
-          width: 50px;
-          height: 50px;
+          background: rgba(220, 38, 38, 0.6);
+          width: 40px;
+          height: 40px;
           border-radius: 50%;
-          z-index: 100;
+          transform: translateY(-20px);
         }
-
-        @media (max-width: 640px) {
-          .gallery-swiper.swiper { padding: 0 5%; }
-          .gallery-swiper .swiper-button-next, .gallery-swiper .swiper-button-prev { display: none; }
+        .gallery-swiper .swiper-button-next:after, 
+        .gallery-swiper .swiper-button-prev:after {
+          font-size: 16px;
+          font-weight: bold;
         }
-
-        .gallery-swiper .swiper-pagination {
-          bottom: -5px !important;
+        .gallery-swiper .swiper-pagination-bullet-active {
+          background: #dc2626 !important;
         }
       `}</style>
     </div>
