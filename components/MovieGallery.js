@@ -60,11 +60,15 @@ export default function MovieGallery({ movie }) {
                 `}>
                 {/* Naikkan opacity non-aktif ke 30% atau 40% jika dirasa terlalu gelap */}
                   <img
-                    src={`https://image.tmdb.org/t/p/w500${img.file_path}`}
-                    alt="Poster"
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                  />
+  src={`https://image.tmdb.org/t/p/w500${img.file_path}`} // Default/Fallback
+  srcSet={`
+    https://image.tmdb.org/t/p/w500${img.file_path} 500w,
+    https://image.tmdb.org/t/p/w780${img.file_path} 780w
+  `}
+  sizes="(max-width: 1024px) 500px, 780px"
+  className="w-full h-full object-cover"
+  loading="lazy"
+/>
                 </div>
               )}
             </SwiperSlide>
