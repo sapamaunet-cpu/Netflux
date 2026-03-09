@@ -12,7 +12,7 @@ export default function MovieGallery({ movie }) {
   const extraPosters = movie.images?.posters || [];
   
   const displayPosters = extraPosters.length > 0 
-    ? extraPosters.slice(0, 15) 
+    ? extraPosters.slice(0, 8) 
     : [{ file_path: movie.poster_path }];
 
   return (
@@ -38,12 +38,12 @@ export default function MovieGallery({ movie }) {
             // Mobile (Redmi Note 8): Slide utama hampir full
             0: {
               slidesPerView: 'auto',
-              spaceBetween: -10, // Sedikit rapat
+              spaceBetween: -20, // Sedikit rapat
             },
             // Desktop: Tampilkan banyak
             1024: {
-              slidesPerView: 5,
-              spaceBetween: 25,
+              slidesPerView: 3,
+              spaceBetween: -50,
             },
           }}
           className="gallery-swiper !overflow-visible"
