@@ -12,11 +12,11 @@ export default function AdBanner({ type = 'banner' }) {
     const adConfig = {
       // 1. Iklan Besar untuk Halaman Detail
       detail: {
-        key: '881ad5ccb504614c66c5e759f17179c0', // Key 728x90 Anda
+        key: 'c5d0a5671eae5764fbbe3fd3f46b6fa0', // Key 728x90 Anda
         format: 'iframe',
-        height: 600,
-        width: 160,
-        src: 'https://www.highperformanceformat.com/881ad5ccb504614c66c5e759f17179c0/invoke.js'
+        height: 90,
+        width: 728,
+        src: 'https://www.highperformanceformat.com/c5d0a5671eae5764fbbe3fd3f46b6fa0/invoke.js'
       },
       // 2. Iklan Banner untuk MovieList
       listBanner: {
