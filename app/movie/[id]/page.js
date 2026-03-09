@@ -110,26 +110,10 @@ export default async function MoviePage({ params, searchParams }) {
           {/* GALERI (Komponen Client) */}
           <MovieGallery movie={movie} />
 
-        {/* Ganti bagian skrip iklan Anda dengan ini */}
-<div className="my-10 flex justify-center">
-  <div 
-    dangerouslySetInnerHTML={{
-      __html: `
-        <script type="text/javascript">
-          atOptions = {
-            'key' : 'c5d0a5671eae5764fbbe3fd3f46b6fa0',
-            'format' : 'iframe',
-            'height' : 90,
-            'width' : 728,
-            'params' : {}
-          };
-        </script>
-        <script type="text/javascript" src="https://www.highperformanceformat.com/c5d0a5671eae5764fbbe3fd3f46b6fa0/invoke.js"></script>
-      `
-    }}
-  />
-</div>
-
+        {/* IKLAN */}
+    <div className="my-10">
+           <AdBanner type="detail" />
+    </div>
             {/* 4. PEMERAN UTAMA */}
             <div className="mb-12">
               <h2 className="text-xl font-bold mb-5 border-l-4 border-red-600 pl-3">Pemeran Utama</h2>
