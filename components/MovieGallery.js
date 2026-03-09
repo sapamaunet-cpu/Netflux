@@ -53,7 +53,7 @@ export default function MovieGallery({ movie }) {
             <SwiperSlide key={index} style={{ width: 'calc(100% - 40px)' }} className="sm:!w-auto"> 
               {({ isActive }) => (
                 <div className={`
-                  relative aspect-[2/3] rounded-2xl overflow-hidden border transition-all duration-300 shadow-2xl
+                  poster-container
                   ${isActive 
                     ? 'border-red-600' 
                     : 'border-zinc-800 opacity-20 blur-[2px]'} 
@@ -94,6 +94,11 @@ export default function MovieGallery({ movie }) {
         .gallery-swiper .swiper-pagination-bullet-active {
           background: #dc2626 !important;
         }
+        .poster-container {
+  will-change: transform; /* Memberitahu browser untuk siap-siap melakukan animasi */
+  backface-visibility: hidden; /* Mencegah kedipan (flicker) saat digeser */
+}
+
       `}</style>
     </div>
   );
