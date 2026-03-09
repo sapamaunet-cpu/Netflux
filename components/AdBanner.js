@@ -14,8 +14,8 @@ export default function AdBanner({ type = 'banner' }) {
       detail: {
         key: '881ad5ccb504614c66c5e759f17179c0', // Key 728x90 Anda
         format: 'iframe',
-        height: 90,
-        width: 728,
+        height: 600,
+        width: 160,
         src: 'https://www.highperformanceformat.com/881ad5ccb504614c66c5e759f17179c0/invoke.js'
       },
       // 2. Iklan Banner untuk MovieList
