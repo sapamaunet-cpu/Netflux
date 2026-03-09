@@ -37,7 +37,7 @@ export default function MovieGallery({ movie }) {
           breakpoints={{
             // Mobile (Redmi Note 8): Slide utama hampir full
             0: {
-              slidesPerView: 'auto',
+              slidesPerView: 1.2,
               spaceBetween: -20, // Sedikit rapat
             },
             // Desktop: Tampilkan banyak
