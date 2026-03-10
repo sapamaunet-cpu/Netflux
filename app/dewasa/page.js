@@ -8,7 +8,7 @@ export default async function Home() {
       <h2 className="text-2xl font-bold px-4 mb-8 flex items-center gap-2">
         <span className="w-1 h-8 bg-red-600 rounded-full"></span> Film Baru
       </h2>
-      <MovieList initialData={data} endpoint="/movie/popular" limit={100} />
+      <MovieList initialData={data} endpoint="/discover/movie?with_keywords=9748,155461,159551&sort_by=popularity.desc" limit={100} />
     </div>
   );
 }
