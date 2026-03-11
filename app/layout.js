@@ -15,6 +15,7 @@ export default function RootLayout({ children }) {
     { id: 28, name: 'Action' },
     { id: 12, name: 'Adventure' },
     { id: 35, name: 'Comedy' },
+    { id: 10749, name: "Romansa" },
     { id: 27, name: 'Horror' },
     { id: 878, name: 'Sci-Fi' },
     { id: 18, name: 'Drama' },
