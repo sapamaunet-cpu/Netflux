@@ -57,12 +57,7 @@ export default async function MoviePage({ params, searchParams }) {
         <div className="flex-1"> {/* Ini flex-1 utama */}
           {/* PLAYER */}
           {isPlaying && (
-            // movie adalah data hasil fetch dari TMDB
-const playerID = movie.imdb_id || movie.id;
-
-// Kemudian kirim ke komponen Player
-<MoviePlayer movieId={playerID} />
-
+        <MoviePlayer movieId={movie.imdb_id || movie.id} />
           )}
 
           {/* SINOPSIS & INFO */}
