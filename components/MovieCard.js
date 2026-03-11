@@ -12,7 +12,7 @@ export default function MovieCard({ movie }) {
         {/* Poster Film */}
         <img
           src={movie.poster_path 
-            ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` 
+            ? `https://image.tmdb.org/t/p/w342${movie.poster_path}` 
             : 'https://placehold.co/500x750?text=No+Poster'}
           alt={movie.title}
           className="h-full w-full object-cover transition-opacity duration-300 group-hover:opacity-70"
