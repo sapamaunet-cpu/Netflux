@@ -24,7 +24,7 @@ export default async function MoviePage({ params, searchParams }) {
 
   if (!movie) return <p>Film tidak ditemukan</p>;
 
-  const relatedMovies = movie.recommendations?.results?.slice(0, 6) || [];
+  const relatedMovies = movie.similar?.results?.slice(0, 6) || [];
 
   return (
     <div className="min-h-screen bg-black text-white pb-20">
