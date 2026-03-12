@@ -1,7 +1,7 @@
-import { getPersonDetails, getPersonMovies, getPersonImages } from '@/lib/tmdb';
-import PersonDetail from '@/components/PersonDetail';
-import PersonGallery from '@/components/PersonGallery';
-import CastMoviesList from '@/components/CastMoviesList';
+import { getPersonDetails, getPersonMovies, getPersonImages } from '../../../lib/tmdb';
+import PersonDetail from '../../../components/PersonDetail';
+import PersonGallery from '../../../components/PersonGallery';
+import CastMoviesList from '../../../components/CastMoviesList';
 
 export default async function PersonPage({ params }) {
   const { id } = params;
