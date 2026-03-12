@@ -4,7 +4,8 @@ import PersonGallery from '../../../components/PersonGallery';
 import CastMoviesList from '../../../components/CastMoviesList';
 
 export default async function PersonPage({ params }) {
-  const { id } = params;
+    const resolvedParams = await params;
+    const id = resolvedParams.id;
 
   // Mengambil semua data secara paralel agar loading lebih cepat di RAM 2GB
   const [person, moviesData, imagesData] = await Promise.all([
