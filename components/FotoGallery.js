@@ -9,11 +9,11 @@ import 'swiper/css/pagination';
 import 'swiper/css/effect-coverflow';
 
 export default function FotoGallery({ images }) {
-  const extraPosters = images?.profile || [];
+  const extraPosters = images?.profiles || [];
   
   const displayPosters = extraPosters.length > 0 
     ? extraPosters.slice(0, 8) 
-    : [{ file_path: movie.poster_path }];
+    : [{ file_path: profile_path }];
 
   return (
     <div className="mt-12 mb-10 group overflow-hidden"> {/* Tambah overflow-hidden */}
