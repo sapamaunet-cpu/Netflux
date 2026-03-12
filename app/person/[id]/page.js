@@ -2,7 +2,7 @@ import { getPersonDetails, getPersonMovies, getPersonImages } from '../../../lib
 import PersonDetail from '../../../components/PersonDetail';
 import PersonGallery from '../../../components/PersonGallery';
 import CastMoviesList from '../../../components/CastMoviesList';
-import MovieGallery from '../../../components/MovieGallery'; 
+import FotoGallery from '../../../components/FotoGallery'; 
 
 export default async function PersonPage({ params }) {
     const resolvedParams = await params;
@@ -57,9 +57,9 @@ export default async function PersonPage({ params }) {
 
         {/* 3. GALERI FOTO (Jika ada) */}
         {imagesData.profiles?.length > 0 && (
-        <div className="mt-12">
-               <PersonGallery images={imagesData} /> 
-          </div> 
+        
+               <FotoGallery images={imagesData} /> 
+          
         )}
 
         {/* 4. LIST FILM (CastMoviesList) */}
