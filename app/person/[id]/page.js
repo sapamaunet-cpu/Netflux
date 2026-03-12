@@ -57,8 +57,9 @@ export default async function PersonPage({ params }) {
 
         {/* 3. GALERI FOTO (Jika ada) */}
         {imagesData.profiles?.length > 0 && (
-       
-            <MovieGallery movie={imagesData} />
+        <div className="mt-12">
+               <PersonGallery images={imagesData} /> 
+          </div> 
         )}
 
         {/* 4. LIST FILM (CastMoviesList) */}
