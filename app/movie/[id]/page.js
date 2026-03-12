@@ -124,21 +124,33 @@ export default async function MoviePage({ params, searchParams }) {
            <AdBanner type="detail" />
     </div>
             {/* 4. PEMERAN UTAMA */}
-            <div className="mb-12">
-              <h2 className="text-xl font-bold mb-5 border-l-4 border-red-600 pl-3">Pemeran Utama</h2>
-              <div className="flex gap-4 overflow-x-auto pb-4 no-scrollbar">
-                {movie.credits?.cast?.slice(0, 8).map((person) => (
-                  <div key={person.id} className="w-24 flex-shrink-0 text-center">
-                    <img 
-                      src={person.profile_path ? `https://image.tmdb.org/t/p/w185${person.profile_path}` : 'https://placehold.co/200x200?text=No+Image'} 
-                      className="w-24 h-24 object-cover rounded-full border-2 border-zinc-800 mb-2"
-                      alt={person.name}
-                    />
-                    <p className="text-[10px] font-bold line-clamp-1">{person.name}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
+<div className="mb-12">
+  <h2 className="text-xl font-bold mb-5 border-l-4 border-red-600 pl-3">Pemeran Utama</h2>
+  <div className="flex gap-4 overflow-x-auto pb-4 no-scrollbar">
+    {movie.credits?.cast?.slice(0, 8).map((person) => (
+      <div key={person.id} className="w-24 flex-shrink-0 text-center">
+        {/* Tambahkan Link ke /person/[id] */}
+        <Link href={`/person/${person.id}`} className="group block">
+          <div className="relative">
+            <img 
+              src={person.profile_path ? `https://image.tmdb.org/t/p/w185${person.profile_path}` : 'https://placehold.co/200x200?text=No+Image'} 
+              className="w-24 h-24 object-cover rounded-full border-2 border-zinc-800 mb-2 transition-all group-hover:border-red-600 group-hover:scale-105"
+              alt={person.name}
+            />
+          </div>
+          <p className="text-[10px] font-bold line-clamp-1 group-hover:text-red-600 transition-colors">
+            {person.name}
+          </p>
+          {/* Tambahkan nama karakter jika ingin lebih detail */}
+          <p className="text-[8px] text-zinc-500 line-clamp-1 italic">
+            {person.character}
+          </p>
+        </Link>
+      </div>
+    ))}
+  </div>
+</div>
+
 
           {/* FILM TERKAIT */}
           <h2 className="text-xl font-bold mb-5 border-l-4 border-red-600 pl-3">Film Terkait</h2>
