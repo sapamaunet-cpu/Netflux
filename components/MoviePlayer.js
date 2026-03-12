@@ -8,7 +8,8 @@ export default function MoviePlayer({ movieId }) {
     { name: 'Server 2', provider: 'Vidsrc.me', url: `https://vidsrc-embed.ru/embed/movie/${movieId}` },
     { name: 'Server 3', provider: 'VSembed', url: `https://vsembed.ru/embed/movie/${movieId}` },
     { name: 'Server 4', provider: 'AutoEmbed', url: `https://player.autoembed.cc/embed/movie/${movieId}` },
-    { name: 'Server 5', provider: 'Vidfast', url: `https://vidfast.pro/movie/${movieId}?autoPlay=true` }
+    { name: 'Server 5', provider: 'Vidfast', url: `https://vidfast.pro/movie/${movieId}?autoPlay=true` },
+    { name: 'Server 6', provider: '111Movies', url: `https://111movies.net/movie/${movieId}` }
   ];
 
   const [activeServer, setActiveServer] = useState(servers[0]);
