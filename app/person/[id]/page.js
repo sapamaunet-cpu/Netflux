@@ -2,6 +2,7 @@ import { getPersonDetails, getPersonMovies, getPersonImages } from '../../../lib
 import PersonDetail from '../../../components/PersonDetail';
 import PersonGallery from '../../../components/PersonGallery';
 import CastMoviesList from '../../../components/CastMoviesList';
+import MovieGallery from '../../../components/MovieGallery'; 
 
 export default async function PersonPage({ params }) {
     const resolvedParams = await params;
