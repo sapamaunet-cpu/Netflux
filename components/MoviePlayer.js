@@ -4,8 +4,8 @@ import { useState } from 'react';
 export default function MoviePlayer({ movieId }) {
   // Daftar provider alternatif yang mendukung TMDB ID
   const servers = [
-    { name: 'Server 1', provider: '2Embed', url: `https://www.2embed.cc/embed/${movieId}` },
-    { name: 'Server 2', provider: 'Vidsrc', url: `https://vidsrc.me/embed/movie/${movieId}` },
+    { name: 'Server 1', provider: 'Vidsrc', url: `https://vidsrc.me/embed/movie/${movieId}` },
+    { name: 'Server 2', provider: '2Embed', url: `https://www.2embed.cc/embed/${movieId}` },
     { name: 'Server 3', provider: 'VSembed', url: `https://vsembed.ru/embed/movie/${movieId}` },
     { name: 'Server 4', provider: 'AutoEmbed', url: `https://player.autoembed.cc/embed/movie/${movieId}` },
     { name: 'Server 5', provider: 'Vidfast', url: `https://vidfast.pro/movie/${movieId}?autoPlay=true` },
