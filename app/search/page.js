@@ -47,7 +47,7 @@ export default async function SearchPage({ searchParams }) {
     <div className="flex gap-4 overflow-x-auto pb-6 no-scrollbar snap-x">
       {artists.slice(0, 10).map((person) => (
         <div key={person.id} className="snap-center">
-          <ArtistSearchCard person={person} />
+          <ArtistSearchCard person={person[0]} />
         </div>
       ))}
     </div>
