@@ -27,7 +27,20 @@ export default async function SearchPage({ searchParams }) {
       </div>
     );
   }
-// Di dalam return SearchPage: untuk artist
+
+
+  // Mengambil data dari TMDB
+  const initialData = await getMovies(`/search/movie?query=${encodeURIComponent(searchQuery)}`, 1);
+  const artists = await getArtistResults(encodeURIComponent(searchQuery));
+  
+  return (
+    <div className="min-h-screen bg-black text-white p-6">
+      <div className="max-w-7xl mx-auto">
+        <h1 className="text-2xl font-bold mb-8">
+          Hasil Pencarian: <span className="text-red-600">"{searchQuery}"</span>
+        </h1>
+  
+        // Di dalam return SearchPage: untuk artist
 {artists.length > 0 && (
   <div className="mb-10">
     <h2 className="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.3em] mb-5 px-1">
@@ -43,16 +56,7 @@ export default async function SearchPage({ searchParams }) {
   </div>
 )}
 
-  // Mengambil data dari TMDB
-  const initialData = await getMovies(`/search/movie?query=${encodeURIComponent(searchQuery)}`, 1);
-  const artists = await getArtistResults(encodeURIComponent(searchQuery));
-  return (
-    <div className="min-h-screen bg-black text-white p-6">
-      <div className="max-w-7xl mx-auto">
-        <h1 className="text-2xl font-bold mb-8">
-          Hasil Pencarian: <span className="text-red-600">"{searchQuery}"</span>
-        </h1>
-        
+//ini pencarian movie
         {initialData?.results?.length > 0 ? (
           <MovieList initialData={initialData} endpoint={`/search/movie?query=${encodeURIComponent(searchQuery)}`} />
         ) : (
