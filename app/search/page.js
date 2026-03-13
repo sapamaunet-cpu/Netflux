@@ -39,18 +39,12 @@ export default async function SearchPage({ searchParams }) {
         <h1 className="text-2xl font-bold mb-8">
           Hasil Pencarian: <span className="text-red-600">"{searchQuery}"</span>
         </h1>
-{artists.length > 0 && (
+{artists && artists.length > 0 && (
   <div className="mb-10">
     <h2 className="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.3em] mb-5 px-1">
       Aktor Terkait
     </h2>
-    <div className="flex gap-4 overflow-x-auto pb-6 no-scrollbar snap-x">
-      {artists.slice(0, 10).map((person) => (
-        <div key={person.id} className="snap-center">
-          <ArtistSearchCard person={person[0]} />
-        </div>
-      ))}
-    </div>
+    <ArtistSearchCard person={artists[0]} />
   </div>
 )}
         {initialData?.results?.length > 0 ? (
