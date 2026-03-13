@@ -34,11 +34,11 @@ export default function ArtistSearchCard({ person }) {
         {/* BAGIAN 2: DAFTAR FILM */}
         <div className="flex-1 relative pb-10 md:pb-0">
           <p className="text-[10px] text-zinc-500 font-bold uppercase tracking-widest mb-3 px-1">
-            Karya Populer:
+            Popular by: {person.name}
           </p>
           
           <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-3">
-            {person.known_for?.slice(0, 5).map((item) => (
+            {person.known_for?.slice(0, 6).map((item) => (
               <Link 
                 key={item.id} 
                 href={item.media_type === 'tv' ? `/tv/${item.id}` : `/movie/${item.id}`}
