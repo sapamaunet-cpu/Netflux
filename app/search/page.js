@@ -1,5 +1,6 @@
 import { getMovies, getArtistResults } from '../../lib/tmdb';
 import MovieList from '../../components/MovieList';
+import ArtistSearchCard from '../../components/ArtistSearchCard';
 
 export async function generateMetadata({ searchParams }) {
   const query = searchParams.q || '';
@@ -26,6 +27,21 @@ export default async function SearchPage({ searchParams }) {
       </div>
     );
   }
+// Di dalam return SearchPage: untuk artist
+{artists.length > 0 && (
+  <div className="mb-10">
+    <h2 className="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.3em] mb-5 px-1">
+      Aktor Terkait
+    </h2>
+    <div className="flex gap-4 overflow-x-auto pb-6 no-scrollbar snap-x">
+      {artists.slice(0, 10).map((person) => (
+        <div key={person.id} className="snap-center">
+          <ArtistSearchCard person={person} />
+        </div>
+      ))}
+    </div>
+  </div>
+)}
 
   // Mengambil data dari TMDB
   const initialData = await getMovies(`/search/movie?query=${encodeURIComponent(searchQuery)}`, 1);
