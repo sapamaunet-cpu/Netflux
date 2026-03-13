@@ -29,7 +29,7 @@ export default async function SearchPage({ searchParams }) {
 
   // Mengambil data dari TMDB
   const initialData = await getMovies(`/search/movie?query=${encodeURIComponent(searchQuery)}`, 1);
-
+  const artists = await getArtistResults(encodeURIComponent(searchQuery));
   return (
     <div className="min-h-screen bg-black text-white p-6">
       <div className="max-w-7xl mx-auto">
