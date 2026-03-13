@@ -39,8 +39,6 @@ export default async function SearchPage({ searchParams }) {
         <h1 className="text-2xl font-bold mb-8">
           Hasil Pencarian: <span className="text-red-600">"{searchQuery}"</span>
         </h1>
-  
-        // Di dalam return SearchPage: untuk artist
 {artists.length > 0 && (
   <div className="mb-10">
     <h2 className="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.3em] mb-5 px-1">
@@ -55,8 +53,6 @@ export default async function SearchPage({ searchParams }) {
     </div>
   </div>
 )}
-
-//ini pencarian movie
         {initialData?.results?.length > 0 ? (
           <MovieList initialData={initialData} endpoint={`/search/movie?query=${encodeURIComponent(searchQuery)}`} />
         ) : (
