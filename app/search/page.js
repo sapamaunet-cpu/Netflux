@@ -1,4 +1,4 @@
-import { getMovies } from '../../lib/tmdb';
+import { getMovies, getArtistResults } from '../../lib/tmdb';
 import MovieList from '../../components/MovieList';
 
 export async function generateMetadata({ searchParams }) {
